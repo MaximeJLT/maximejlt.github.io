@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Maxime Jolliot</title>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono&display=swap" rel="stylesheet">
   <style>
     * {
   margin: 0;
@@ -12,6 +13,9 @@
   box-sizing: border-box;
   font-family: 'Sora', sans-serif;
 }
+    nav {
+      font-family: 'Space Mono', monospace;
+    }
     body {
       background-color: #f0f2f5;
       color: #111;
@@ -159,7 +163,7 @@
       gap: 20px;
     }
     .passion-item img {
-      width: 300px;
+      width: 360px;
       border-radius: 12px;
       transition: transform 0.3s ease-in-out;
     }
@@ -330,7 +334,11 @@
       <a href="#education">Education</a>
       <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
+      <a href="#skills">Competencies</a>
+      <a href="#programming">Programming</a>
+      <a href="#languages">Languages</a>
       <a href="#passions">Passions</a>
+      <a href="#recruiter-docs">Recruiter Resources</a>
     </nav>
   </header>
 
@@ -352,7 +360,7 @@
       <div><span>Age</span>23 years old</div>
     </div>
     <div class="bio-description">
-      I'm a computer science- and data-oriented engineering student at ISAE-ENSMA. Passionate about science since childhood, I had a bumpy road through an initial career in commerce — for which I was ill-suited. I eventually took back control of my academic path and shifted towards a degree in physics, catching up on seven years of mathematics in just six months.
+      I'm a fist year engineering student at ISAE-ENSMA. Passionate about science since childhood, I had a bumpy road through an initial career in commerce, for which I was ill-suited. I eventually took back control of my academic path and shifted towards a degree in physics, catching up on seven years of mathematics in just six months.
       Throughout my bachelor's, I explored a wide range of topics, developing a strong interest in statistical physics, mathematics, and computer science — especially the simulation of complex systems. I've worked on several projects involving Monte Carlo methods, including the Ising model and random walkers.
       This growing passion has led me to delve deeper into how intelligence can be embedded into code. I'm especially curious about the intersection of simulation, statistics, and optimization. I'm eager to apply my knowledge to concrete domains such as quantitative engineering, advanced technological systems, and space exploration.
     </div>
@@ -367,12 +375,12 @@
       </div>
       <div class="entry">
         <div class="entry-title">Engineering degree – ISAE-ENSMA (2025–2028)</div>
-        <div>During my bachelor's degree, I developed a strong passion for statistical physics and scientific computing — especially the simulation of complex systems. I became fascinated by how computers have revolutionized both physics and mathematics, making it possible to tackle problems that were once unsolvable.
+        <div>During my bachelor's degree, I developed a strong passion for statistical physics and scientific computing, especially the simulation of complex systems. I became fascinated by how computers have revolutionized both physics and mathematics, making it possible to tackle problems that were once unsolvable.
 Through this path, I aim to become an engineer who can model, simulate, and quantify uncertainty in highly technical systems.
 Why this choice?
-Because in today's world, uncertainty is everywhere — in financial markets, aerospace systems, climate models, autonomous vehicles.
+Because in today's world, uncertainty is everywhere, in financial markets, aerospace systems, climate models, autonomous vehicles.
 And as systems become more complex, the ability to extract knowledge from data and simulate outcomes under uncertainty becomes one of the most critical engineering skills.
-This kind of quantitative, data-driven mindset is not only at the heart of modern science, but also a key asset for any innovative company — whether in aerospace, tech, or finance.</div>
+This kind of quantitative, data-driven mindset is not only at the heart of modern science, but also a key asset for any innovative company, whether in aerospace, tech, or finance.</div>
       </div>
     </div>
   </section>
@@ -446,6 +454,18 @@ This kind of quantitative, data-driven mindset is not only at the heart of moder
           <span>XYZ Export</span>
         </div>
       </div>
+
+    <a href="https://github.com/MaximeJLT/Portfolio-simulation?tab=readme-ov-file#risky-portfolio-simulation-using-the-binomial-distribution" target="_blank" style="text-decoration: none; color: inherit;">
+      <div class="entry" style="cursor: pointer;">
+    <div class="entry-title">Risky Portfolio Simulation – Binomial & Geometric Models (R)</div>
+    <div>This project simulates the behavior of a risky financial portfolio using R. The first part models portfolio gains over a fixed number of days using a binomial distribution, allowing analysis of how the number of successful investment days evolves with time. The second part models the waiting time until the first successful gain using a geometric distribution. Both simulations use simple Monte Carlo techniques to build intuition about probabilistic events in finance.</div>
+    <div class="project-rectangles">
+      <span><strong>R</strong></span>
+      <span>Binomial</span>
+      <span>Geometric</span>
+      <span>Finance</span>
+      </div>
+     </div>
     </a>
 
     <div class="entry">
@@ -457,6 +477,109 @@ This kind of quantitative, data-driven mindset is not only at the heart of moder
         <span>Diffusion</span>
         <span>2D Model</span>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-inner">
+    <h2>Core Competencies</h2>
+    <div class="entry" style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: space-between;">
+
+      <!-- Engineering Block -->
+      <div style="flex: 1; min-width: 280px; background: #f4f4f4; padding: 1.5rem; border-radius: 10px;">
+        <h3 style="margin-top: 0;">Engineering & Research</h3>
+        <ul>
+          <li>Signal & Systems</li>
+          <li>Fluid and solid mechanics</li>
+          <li>Linear algebra</li>
+          <li>Statistics and probability</li>
+          <li>Aerodynamics & propulsion systems</li>
+          <li>Thermodynamics & heat transfer</li>
+          <li>Data analysis</li>
+        </ul>
+      </div>
+
+      <!-- Programming & Simulation Block -->
+      <div style="flex: 1; min-width: 280px; background: #f4f4f4; padding: 1.5rem; border-radius: 10px;">
+        <h3 style="margin-top: 0;">Programming & Simulation</h3>
+        <ul>
+          <li>Monte Carlo simulations</li>
+          <li>Statistical modeling</li>
+          <li>Python (NumPy, Matplotlib, SciPy, Pandas)</li>
+          <li>C (std, math.h)</li>
+          <li>C++ (iostream, STL, cmath)</li>
+        </ul>
+      </div>
+
+      <!-- Soft Skills Block -->
+      <div style="flex: 1; min-width: 280px; background: #f4f4f4; padding: 1.5rem; border-radius: 10px;">
+        <h3 style="margin-top: 0;">Soft Skills</h3>
+        <ul>
+          <li>Project management</li>
+          <li>Public speaking (English)</li>
+          <li>Empathy and teamwork</li>
+          <li>Client relations</li>
+          <li>Guidance and mentoring</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="programming">
+  <div class="section-inner">
+    <h2>Programming Languages</h2>
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+      <div><strong>Python</strong>
+        <div style="background: #ccc; height: 10px; border-radius: 6px; overflow: hidden;">
+          <div style="background: #00e1ff; width: 50%; height: 100%;"></div>
+        </div>
+      </div>
+      <div><strong>MATLAB</strong>
+        <div style="background: #ccc; height: 10px; border-radius: 6px; overflow: hidden;">
+          <div style="background: #ff0000; width: 50%; height: 100%;"></div>
+        </div>
+      </div>
+      <div><strong>C</strong>
+        <div style="background: #ccc; height: 10px; border-radius: 6px; overflow: hidden;">
+          <div style="background: #f300b6; width: 25%; height: 100%;"></div>
+        </div>
+      </div>
+      <div><strong>C++</strong>
+        <div style="background: #ccc; height: 10px; border-radius: 6px; overflow: hidden;">
+          <div style="background: #0070f3; width: 25%; height: 100%;"></div>
+        </div>
+      </div>
+      <div><strong>R</strong>
+        <div style="background: #ccc; height: 10px; border-radius: 6px; overflow: hidden;">
+          <div style="background: #29f300; width: 12.5%; height: 100%;"></div>
+        </div>
+      </div>
+      <div><strong>HTML</strong>
+        <div style="background: #ccc; height: 10px; border-radius: 6px; overflow: hidden;">
+          <div style="background: #f38e00; width: 12.5%; height: 100%;"></div>
+        </div>
+      </div>
+      <div><strong>LaTeX</strong>
+        <div style="background: #ccc; height: 10px; border-radius: 6px; overflow: hidden;">
+          <div style="background: #f3f300; width: 12.5%; height: 100%;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. AJOUTER LA SECTION "LANGUAGES" -->
+<section id="languages">
+  <div class="section-inner">
+    <h2>Languages</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+      <span style="background: #e0e0e0; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600;">Français : native</span>
+      <span style="background: #e0e0e0; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600;">Anglais : C1+ level</span>
+      <span style="background: #e0e0e0; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600;">Espagnol : A1+ level</span>
+      <span style="background: #e0e0e0; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600;">Chinois : A1 level</span>
     </div>
   </div>
 </section>
@@ -496,6 +619,33 @@ This kind of quantitative, data-driven mindset is not only at the heart of moder
       </div>
     </div>
   </section>
+
+  <!-- Recruiter Documentation Section -->
+<section id="recruiter-docs" style="margin-top: 4rem;">
+  <div class="section-inner">
+    <h2>Recruiter Resources</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+      <a href="docs/pdf.pdf" download style="background-color: #002244; color: white; padding: 0.75rem 1.25rem; border-radius: 6px; text-decoration: none;">Physics Transcript</a>
+      <a href="docs/Recommandation.pdf" download style="background-color: #002244; color: white; padding: 0.75rem 1.25rem; border-radius: 6px; text-decoration: none;">Recommendation Letter</a>
+      <a href="docs/CV%20ingenieur.pdf" download style="background-color: #002244; color: white; padding: 0.75rem 1.25rem; border-radius: 6px; text-decoration: none;">Curriculum Vitae (CV)</a>
+    </div>
+  </div>
+</section>
+
+<!-- Update Navigation Bar -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const nav = document.querySelector("nav ul");
+    if (nav) {
+      const docLink = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = "#recruiter-docs";
+      a.textContent = "Resources";
+      docLink.appendChild(a);
+      nav.appendChild(docLink);
+    }
+  });
+</script>
 
   <footer style="padding: 2rem 1rem; background-color: #f0f2f5;">
   <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem;">
