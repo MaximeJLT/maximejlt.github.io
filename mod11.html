@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maxime Jolliot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Sora', sans-serif;
+}
+    body {
+      background-color: #f0f2f5;
+      color: #111;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 10;
+      border-bottom: 1px solid #ddd;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav a {
+      margin-left: 1rem;
+      text-decoration: none;
+      color: #0070f3;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #0051a2;
+    }
+    section {
+      width: 100%;
+      padding: 6rem 2rem;
+      border-top: 2px solid #ccc;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    section:nth-of-type(even) {
+      background-color: #e4e6eb;
+    }
+    section:nth-of-type(odd) {
+      background-color: #f7f9fb;
+    }
+    .section-inner {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .hero {
+      height: 100vh;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+      padding: 4rem 2rem;
+      background-color: #f7f9fb;
+    }
+    .hero-text {
+      flex: 1;
+      padding: 2rem;
+    }
+    .hero-text h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      font-weight: bold;
+      color: #002b5c;
+    }
+    .hero-text p {
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: #333;
+    }
+    .hero-img {
+      flex: 1;
+      text-align: center;
+      padding: 2rem;
+    }
+    .hero-img img {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 10px;
+    }
+    h2 {
+      font-size: 3.5rem;
+      color: #002147;
+      margin-bottom: 3rem;
+      text-align: center;
+      font-weight: 800;
+    }
+    .entry {
+      margin: 2rem auto;
+      padding: 2rem;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
+      max-width: 1000px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .entry:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 40px rgba(0, 112, 243, 0.4);
+    }
+    .entry-title {
+      font-weight: bold;
+      font-size: 1.4rem;
+      color: #002b5c;
+      margin-bottom: 1rem;
+    }
+    .tech-tags {
+      margin-top: 1rem;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .tech-tags span {
+      background: #ccc;
+      color: #333;
+      font-size: 0.9rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 5px;
+    }
+    .zigzag {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .zigzag > div:nth-child(even) {
+      align-self: flex-end;
+    }
+    .zigzag > div:nth-child(odd) {
+      align-self: flex-start;
+    }
+    .square-entry {
+      width: 420px;
+      background: #dde3ea;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+    }
+    .passion-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .passion-item img {
+      width: 300px;
+      border-radius: 12px;
+      transition: transform 0.3s ease-in-out;
+    }
+    .passion-item img:hover {
+      transform: scale(1.05);
+    }
+    .vertical-left, .vertical-right {
+      position: fixed;
+      bottom: 0;
+      transform: translateY(0);
+      width: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      Padding-bottom: 120px;
+    }
+    .vertical-left {
+      left: 0;
+    }
+    .vertical-left::after {
+      content: "";
+      position: absolute;
+      width: 2px;
+      height: 100px;
+      background: #0070f3;
+      bottom: 0;
+      left: 24px;
+    }
+    .vertical-left a {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      margin: 0.5rem 0;
+      text-decoration: none;
+      color: #0070f3;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+    .vertical-left a:hover {
+      color: #0051a2;
+    }
+    .vertical-right {
+      right: 0;
+    }
+    .vertical-right::after {
+      content: "";
+      position: absolute;
+      width: 2px;
+      height: 100px;
+      background: #0070f3;
+      bottom: 0;
+      right: 24px;
+    }
+    .vertical-right span {
+      writing-mode: vertical-lr;
+      font-family: 'Space Mono', monospace;
+      color: #555;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+    }
+    .hero-button {
+      margin-top: 2rem;
+      padding: 0.8rem 2rem;
+      background: white;
+      color: #002147;
+      border: 2px solid #002147;
+      font-weight: bold;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .hero-button:hover {
+      background-color: #002147;
+      color: white;
+    }
+    .bio-description {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 1.3rem;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .info-line {
+      width: 100%;
+      display: flex;
+      justify-content: space-evenly;
+      font-size: 1.2rem;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 2px solid #ccc;
+    }
+    .info-line div {
+      text-align: center;
+    }
+    .info-line div span {
+      font-weight: bold;
+      display: block;
+      color: #0070f3;
+    }
+    .entry a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .entry a::before {
+      content: url('https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg');
+      filter: invert(34%) sepia(98%) saturate(2805%) hue-rotate(202deg) brightness(100%) contrast(96%);
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+    }
+.project-rectangles {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 1.5rem;
+}
+
+.project-rectangles span {
+  background-color: #e0e0e0;
+  color: #002147;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const sections = document.querySelectorAll("section");
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+
+      sections.forEach(section => {
+        observer.observe(section);
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="vertical-left">
+  <a href="https://github.com/MaximeJLT" target="_blank">GitHub</a>
+  <a href="https://www.linkedin.com/in/maxime-jolliot-🚀-1a3183342/" target="_blank">LinkedIn</a>
+</div>
+
+<!-- Vertical email (right) -->
+<div class="vertical-right">
+  <span>maxime.jolliot@gmail.com</span>
+</div>
+  <header>
+    <div><strong>Maxime Jolliot</strong></div>
+    <nav>
+      <a href="#education">Education</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#passions">Passions</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="section-inner hero-text">
+  <h1><strong>Meet Maxime,</strong></h1>
+  <p><strong>An incoming research engineer in risk & reliability, with a strong focus in data/machine learning</strong></p>
+  <a href="#about" class="hero-button">Learn more about me</a>
+</div>
+<div class="section-inner hero-img">
+  <img src="moi.jpg" alt="Maxime Jolliot" />
+</div>
+  </section>
+
+  <section id="about">
+    <div class="section-inner info-line">
+      <div><span>Hometown</span>Poitiers</div>
+      <div><span>School</span>ISAE-ENSMA</div>
+      <div><span>Age</span>23 years old</div>
+    </div>
+    <div class="bio-description">
+      I'm a computer science- and data-oriented engineering student at ISAE-ENSMA. Passionate about science since childhood, I had a bumpy road through an initial career in commerce — for which I was ill-suited. I eventually took back control of my academic path and shifted towards a degree in physics, catching up on seven years of mathematics in just six months.
+      Throughout my bachelor's, I explored a wide range of topics, developing a strong interest in statistical physics, mathematics, and computer science — especially the simulation of complex systems. I've worked on several projects involving Monte Carlo methods, including the Ising model and random walkers.
+      This growing passion has led me to delve deeper into how intelligence can be embedded into code. I'm especially curious about the intersection of simulation, statistics, and optimization. I'm eager to apply my knowledge to concrete domains such as quantitative engineering, advanced technological systems, and space exploration.
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="section-inner">
+      <h2>My Education</h2>
+      <div class="entry">
+        <div class="entry-title">Physics Bachelor – Université de Bourgogne (2021–2025)</div>
+        <div>I entered this demanding physics program with no prior experience in mathematics or physics. During the first semester, my grades did not exceed 4/20. Through relentless effort and self-discipline, I eventually became top of my class and student representative in my final year. This program gave me a strong foundation in mathematics (linear algebra, ODEs, PDEs including Frobenius method and Fourier transform), computer science (gradient descent, Gaussian elimination, Euler's method), and physics: quantum mechanics, solid-state physics, electromagnetism, statistical physics (Boltzmann distribution, partition function, entropy, Ising model), optics, and electronics.</div>
+      </div>
+      <div class="entry">
+        <div class="entry-title">Engineering degree – ISAE-ENSMA (2025–2028)</div>
+        <div>During my bachelor's degree, I developed a strong passion for statistical physics and scientific computing — especially the simulation of complex systems. I became fascinated by how computers have revolutionized both physics and mathematics, making it possible to tackle problems that were once unsolvable.
+Through this path, I aim to become an engineer who can model, simulate, and quantify uncertainty in highly technical systems.
+Why this choice?
+Because in today's world, uncertainty is everywhere — in financial markets, aerospace systems, climate models, autonomous vehicles.
+And as systems become more complex, the ability to extract knowledge from data and simulate outcomes under uncertainty becomes one of the most critical engineering skills.
+This kind of quantitative, data-driven mindset is not only at the heart of modern science, but also a key asset for any innovative company — whether in aerospace, tech, or finance.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="section-inner">
+      <h2>Professional Experiences</h2>
+      <div class="entry">
+        <div class="entry-title">Quantum physics research internship – Laboratoire Interdisciplinaire Carnot de Bourgogne (Jan 2025)</div>
+        <div>Application of optimal control to quantum technologies:
+<ul>
+<li>Literature review on quantum control theory and GRAPE-based methods</li>
+<li>Analysis and improvement of a pre-existing MATLAB code for simulating controlled qubit dynamics</li>
+<li>Modeling a two-level qubit system, including decoherence and drift terms</li>
+<li>Application of optimal control theory to design time-dependent control fields</li>
+<li>Implementation of the GRAPE algorithm (Gradient Ascent Pulse Engineering) to optimize pulse sequences for desired qubit trajectories</li>
+<li>Focus on numerical stability, convergence speed, and physical relevance of the control results.</li>
+</ul></div>
+      </div>
+      <div class="entry">
+        <div class="entry-title">Private Tutor – Maths &amp; Physics</div>
+        <div>Support for adults in professional reconversion toward scientific careers:
+<ul>
+<li>Helped five adult learners returning to academic paths in STEM fields</li>
+<li>Designed personalized tutoring programs based on individual backgrounds and goals</li>
+<li>Provided structured lessons in mathematics and physics, from fundamentals to more advanced concepts</li>
+<li>Offered continuous support and follow-up to ensure motivation and progress over time</li>
+<li>Developed strong empathy and communication skills through shared experience, having myself transitioned from a non-scientific background</li>
+</ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+  <div class="section-inner">
+    <h2>
+      Projects
+      <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg" alt="GitHub logo" style="width: 36px; height: 36px; vertical-align: middle; margin-left: 12px; filter: invert(34%) sepia(98%) saturate(2805%) hue-rotate(202deg) brightness(100%) contrast(96%);" />
+    </h2>
+
+    <div class="entry">
+      <div class="entry-title">Ising Model – Monte Carlo Simulations</div>
+      <div>Simulated the 2D Ising model using the Metropolis algorithm to explore phase transitions. Analyzed the behavior of magnetic spins on a lattice, computed magnetization, and visualized cluster formation depending on temperature.</div>
+      <div class="project-rectangles">
+        <span>Python</span>
+        <span>Monte Carlo</span>
+        <span>Ising</span>
+        <span>Simulation</span>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-title">Freely Jointed Chain – Polymer Simulation</div>
+      <div>Implemented a random walk algorithm to simulate a polymer chain in 3D, where each segment is free to orient inside a unit sphere. Studied conformational entropy and probability distributions of end-to-end distances.</div>
+      <div class="project-rectangles">
+        <span>MATLAB</span>
+        <span>Random Walk</span>
+        <span>3D Model</span>
+        <span>Polymers</span>
+      </div>
+    </div>
+
+    <a href="https://github.com/MaximeJLT/Graphene-Cohesion-Energy" target="_blank" style="text-decoration: none; color: inherit;">
+      <div class="entry" style="cursor: pointer;">
+        <div class="entry-title">Cohesion Energy – Graphene Potential</div>
+        <div>Modeled atomic interactions in a 2D graphene lattice using a Lennard-Jones potential. Calculated potential energy landscapes at various adsorption sites (Top, Bridge, Hole), and exported XYZ files for visualization.</div>
+        <div class="project-rectangles">
+          <span>MATLAB</span>
+          <span>Lennard-Jones</span>
+          <span>Graphene</span>
+          <span>XYZ Export</span>
+        </div>
+      </div>
+    </a>
+
+    <div class="entry">
+      <div class="entry-title">Random Walkers – Diffusion Process</div>
+      <div>Simulated the movement of thousands of particles undergoing random motion in 2D. Analyzed their spatial distribution over time, computed mean squared displacement, and confirmed the diffusion law.</div>
+      <div class="project-rectangles">
+        <span>MATLAB</span>
+        <span>Random Walk</span>
+        <span>Diffusion</span>
+        <span>2D Model</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <section id="passions">
+    <div class="section-inner">
+      <h2>Outside the Lab</h2>
+      <div class="zigzag">
+        <div class="passion-item">
+          <img src="IMG_2941 3.jpg" alt="Nature travel">
+          <div class="square-entry">
+            <h3>Nature &amp; Travel</h3>
+            <p>I've always had a deep passion for life and the universe. As a child, I loved analyzing my environment and understanding how things worked. This natural curiosity guided me toward engineering and simulation. I spent my youth raising reptiles, exploring wild places, and observing the beauty of nature. Discovering statistical physics was a revelation — it showed me how human civilization is built on nature's laws. To me, a modern city skyline can be just as beautiful as a mountain range in the Alps.</p>
+          </div>
+        </div>
+        <div class="passion-item">
+          <img src="IMG_1588 5.jpg" alt="Fitness food">
+          <div class="square-entry">
+            <h3>Fitness &amp; Nutrition</h3>
+            <p>To perform well professionally, I must perform at the gym too. Physical and mental health are inseparable. I dedicate 1.5 to 2 hours per day to bodybuilding. I enjoy crafting healthy recipes, tracking macro and micronutrients, and building the discipline that keeps me going — especially in difficult moments when I doubted myself during my academic transition.</p>
+          </div>
+        </div>
+        <div class="passion-item">
+          <img src="d0d9959_1658597511110-5c93113d2300004b00ae1781.jpeg" alt="Books">
+          <div class="square-entry">
+            <h3>Cinema &amp; Literature</h3>
+            <p>Cinema and literature are my favorite forms of art. I'm deeply moved by existential works that question the essence of human nature. My favorites include <em>Blood Meridian</em>, <em>Fight Club</em>, <em>American Psycho</em>, and <em>The Silence of the Lambs</em>. Cinema engages multiple senses and, like literature, makes us reflect on our own paths and identities.</p>
+          </div>
+        </div>
+        <div class="passion-item">
+          <img src="IMG_2509.jpg" alt="Fashion city">
+          <div class="square-entry">
+            <h3>Style &amp; Expression</h3>
+            <p>Cinema also sparked my interest in classic men's fashion. I believe our appearance — from clothing to grooming — reflects who we are and who we aspire to be. It's not superficial; it's expressive.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="padding: 2rem 1rem; background-color: #f0f2f5;">
+  <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem;">
+    <a href="https://github.com/maximejlt" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/in/maxime-jolliot-🚀-1a3183342/" target="_blank">LinkedIn</a>
+  </div>
+  <p style="text-align: center;">© 2025 Maxime Jolliot</p>
+</footer>
+</body>
+</html>
