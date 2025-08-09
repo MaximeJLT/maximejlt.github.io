@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maxime Jolliot</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Manrope', sans-serif;
+    }
+
+    body {
+  cursor: default;
+}
+
+.custom-cursor {
+  position: fixed;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle,
+    rgba(0, 112, 243, 0.07) 0%,
+    rgba(0, 112, 243, 0.05) 40%,
+    rgba(0, 112, 243, 0.03) 70%,
+    rgba(0, 112, 243, 0.015) 85%,
+    transparent 100%);
+  filter: blur(24px);
+  mix-blend-mode: normal;
+  transition: transform 0.05s ease-out;
+}
+
+
+    body {
+      background-color: #f8f9fa;
+      color: #111;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 100;
+      border-bottom: 1px solid #ddd;
+      padding: 0.7rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header div {
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      font-family: 'IBM Plex Mono', monospace;
+      margin-left: 1rem;
+      font-size: 0.9rem;
+      text-decoration: none;
+      color: #0056b3;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: #002b5c;
+    }
+
+    h1, h2, h3 {
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #002b5c;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      color: #004aad;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    h3 {
+      font-size: 1.4rem;
+      color: #111;
+    }
+
+    section {
+      width: 100%;
+      padding: 4rem 2rem;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f1f4f8;
+      padding: 4rem 2rem;
+    }
+
+    .hero-text {
+      flex: 1;
+      padding-right: 2rem;
+    }
+
+    .hero-text p {
+      font-size: 1.25rem;
+      color: #333;
+    }
+
+    .hero-img {
+      flex: 1;
+      text-align: center;
+    }
+
+    .hero-img img {
+      max-width: 450px;
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .hero-button {
+      margin-top: 2rem;
+      padding: 0.8rem 1.5rem;
+      background: white;
+      color: #002b5c;
+      border: 2px solid #002b5c;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.3s ease-in-out;
+      display: inline-block;
+    }
+
+    .hero-button:hover {
+      background: #002b5c;
+      color: white;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .entry {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+      margin-bottom: 2rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .entry:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 30px rgba(0, 112, 243, 0.4),
+    0 0 12px rgba(0, 112, 243, 0.2) inset;
+  transition: box-shadow 0.3s ease;
+}
+
+    .entry-title {
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: #002b5c;
+      margin-bottom: 1rem;
+    }
+
+    .vertical-left, .vertical-right {
+      position: fixed;
+      bottom: 0;
+      transform: translateY(0);
+      width: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      padding-bottom: 120px;
+    }
+
+    .vertical-left {
+      left: 0;
+    }
+
+    .vertical-left::after, .vertical-right::after {
+      content: "";
+      position: absolute;
+      width: 1px;
+      height: 100px;
+      background: #0056b3;
+    }
+
+    .vertical-left::after {
+      left: 24px;
+      bottom: 0;
+    }
+
+    .vertical-right {
+  right: 0;
+}
+
+    .vertical-right::after {
+      right: 24px;
+      bottom: 0;
+    }
+
+    .vertical-left a, .vertical-right span {
+      writing-mode: vertical-rl;
+      text-decoration: none;
+      font-size: 0.75rem;
+      color: #0056b3;
+      margin: 0.5rem 0;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .vertical-left a:hover {
+      color: #002b5c;
+    }
+
+    .bio-description {
+      margin: 2rem auto;
+      max-width: 800px;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+
+    .info-line {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .info-line div span {
+      display: block;
+      color: #0056b3;
+      font-weight: bold;
+    }
+
+    .project-rectangles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .project-rectangles span {
+      background: #e6e6e6;
+      padding: 0.4rem 0.7rem;
+      border-radius: 5px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #003366;
+    }
+
+    footer {
+      background: #f8f9fa;
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    footer a {
+      color: #0056b3;
+      text-decoration: none;
+      margin: 0 1rem;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+.zigzag {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    margin-top: 6rem; /* encore plus d'espace sous le titre */
+  }
+
+  .passion-item {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    position: relative;
+  }
+
+  .passion-item:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+
+  .passion-item img {
+    width: 40%; /* réduit légèrement la taille */
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    margin-top: 60px;
+    z-index: 1;
+  }
+
+  .passion-item:nth-child(odd) img {
+    margin-left: 25%; /* décalage bien plus important */
+  }
+
+  .passion-item:nth-child(even) img {
+    margin-right: 25%; /* décalage bien plus important */
+  }
+
+  /* Ajustement spécifique pour la section Fitness & Nutrition */
+  .passion-item:nth-of-type(2) img {
+    width: 32%;
+    margin-right: 28%;
+  }
+
+  .square-entry {
+    width: 50%;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 0;
+    z-index: 2;
+  }
+
+  .passion-item:nth-child(odd) .square-entry {
+    left: 0;
+    transform: translate(-20%, -10%); /* plus éloigné, moins de chevauchement */
+  }
+
+  .passion-item:nth-child(even) .square-entry {
+    right: 0;
+    transform: translate(20%, -10%); /* plus éloigné, moins de chevauchement */
+  }
+
+  .square-entry h3 {
+    font-size: 1.3rem;
+    color: #002b5c;
+    margin-bottom: 1rem;
+  }
+
+  .square-entry p {
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .passion-item,
+    .passion-item:nth-child(even) {
+      flex-direction: column;
+    }
+
+    .square-entry,
+    .passion-item:nth-child(even) .square-entry,
+    .passion-item:nth-child(odd) .square-entry {
+      position: relative;
+      transform: none;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    .passion-item img {
+      width: 100%;
+      margin-top: 0;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+
+.hero * {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.8s ease-out forwards;
+}
+
+.hero h1 {
+  animation-delay: 0.2s;
+}
+
+.hero p {
+  animation-delay: 0.6s;
+}
+
+.hero .hero-button {
+  animation-delay: 1s;
+}
+
+.hero-img {
+  animation: fadeUp 1s ease-out forwards;
+  animation-delay: 1.4s;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero h1 {
+  font-size: 4rem;         /* plus gros titre */
+}
+
+.hero-text {
+  padding-left: 4rem;      /* décale tout le bloc texte */
+}
+
+.hero-button {
+  margin-left: 1rem;       /* décale aussi le bouton */
+}
+
+.hero * {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.8s ease-out forwards;
+}
+
+.hero h1 {
+  animation-delay: 0.2s;
+}
+
+.hero p {
+  animation-delay: 0.6s;
+}
+
+.hero .hero-button {
+  animation-delay: 1s;
+}
+
+.hero-img {
+  animation: fadeUp 1s ease-out forwards;
+  animation-delay: 1.4s;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.competency-card h3 {
+  color: #002b5c;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.competency-card p {
+  color: #333;
+  line-height: 1.6;
+}
+
+
+
+
+#projects .projects-zigzag {      /* liste de projets */
+  display: grid;
+  gap: 3.2rem;
+  margin-top: 2.5rem;
+}
+
+/* Un groupe = rectangle au-dessus + image en dessous (jamais en ligne) */
+#projects .project-group {
+  display: block;
+  max-width: 1200px;
+}
+
+/* Rectangle (carte) — aligné au bord */
+#projects .project-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  max-width: 680px;        /* largeur du rectangle */
+  position: relative;
+  z-index: 2;              /* au-dessus de l'image */
+}
+
+/* Impairs : rectangle collé à gauche */
+#projects .project-group:nth-child(odd) .project-card {
+  margin-right: auto;      /* plaque à gauche */
+  margin-left: 0;
+  padding-left: 2vw;       /* petit tampon intérieur */
+  text-align: left;
+}
+
+/* Pairs : rectangle collé à droite */
+#projects .project-group:nth-child(even) .project-card {
+  margin-left: auto;       /* plaque à droite */
+  margin-right: 0;
+  padding-right: 2vw;      /* petit tampon intérieur */
+  text-align: right;
+}
+
+/* Contenu de la carte (confort) */
+#projects .project-card .entry {
+  padding: 1.5rem 1.5rem 1rem;
+}
+
+/* Tags centrés en bas de carte */
+#projects .project-rectangles {
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e9e9e9;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+#projects .project-rectangles span {
+  background: #e6e6e6;
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #003366;
+  white-space: nowrap;
+}
+
+/* Image — sous la carte, décalée VERS L’EXTÉRIEUR + chevauchement */
+#projects .project-illustration {
+  display: block;
+  width: clamp(180px, 26vw, 420px);   /* petite et responsive */
+  height: auto;
+  margin-top: calc(-1 * var(--overlap, 48px));  /* le rectangle “mord” ~1/6 */
+  border-radius: 0;
+  box-shadow: none;
+  position: relative;
+  z-index: 1;
+  /* décalage horizontal personnalisable par --shift (par image) */
+}
+
+/* Impairs : image sous la carte, décalée à DROITE (extérieur) */
+#projects .project-group:nth-child(odd) .project-illustration {
+  margin-left: calc(2vw + var(--shift, 140px));
+  margin-right: auto;
+}
+
+/* Pairs : image sous la carte, décalée à GAUCHE (extérieur) */
+#projects .project-group:nth-child(even) .project-illustration {
+  margin-right: calc(2vw + var(--shift, 140px));
+  margin-left: auto;
+}
+
+/* Mobile : simple, toujours en colonne, chevauchement adouci */
+@media (max-width: 768px) {
+  #projects .project-group { margin: 0 auto; }
+  #projects .project-card {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  #projects .project-illustration {
+    width: 78vw;
+    margin-left: 0;
+    margin-right: 0;
+    /* on garde le côté extérieur en conservant l'auto précédent */
+    margin-top: calc(-1 * var(--overlap, 32px));
+  }
+}
+
+
+
+
+
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const sections = document.querySelectorAll("section");
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+
+      sections.forEach(section => {
+        observer.observe(section);
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="custom-cursor"></div>
+  <div class="vertical-left">
+  <a href="https://github.com/MaximeJLT" target="_blank">GitHub</a>
+  <a href="https://www.linkedin.com/in/maxime-jolliot-🚀-1a3183342/" target="_blank">LinkedIn</a>
+</div>
+
+<!-- Vertical email (right) -->
+ <div class="vertical-left">
+  <a href="https://github.com/MaximeJLT" target="_blank">GitHub</a>
+  <a href="https://www.linkedin.com/in/maxime-jolliot-🚀-1a3183342/" target="_blank">LinkedIn</a>
+</div>
+<div class="vertical-right">
+  <span>maxime.jolliot@gmail.com</span>
+</div>
+  <header>
+    <div><strong>Maxime Jolliot</strong></div>
+    <nav>
+      <a href="#education">Education</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Competencies</a>
+      <a href="#programming">Programming</a>
+      <a href="#languages">Languages</a>
+      <a href="#passions">Passions</a>
+      <a href="#recruiter-docs">Recruiter Resources</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="section-inner hero-text">
+  <h1><strong>Meet Maxime,</strong></h1>
+  <p><strong>An incoming research engineer in risk & reliability, with a strong focus in data/machine learning</strong></p>
+  <a href="#about" class="hero-button">Learn more about me</a>
+</div>
+<div class="section-inner hero-img">
+  <img src="moi.jpg" alt="Maxime Jolliot" />
+</div>
+  </section>
+
+  <section id="about">
+    <div class="section-inner info-line">
+      <div><span>Hometown</span>Poitiers</div>
+      <div><span>School</span>ISAE-ENSMA</div>
+      <div><span>Age</span>23 years old</div>
+    </div>
+    <div class="bio-description">
+      <p>I'm a first-year engineering student at ISAE-ENSMA, with a deep passion for science, systems, and exploration. I’m particularly drawn to the intersection of physics, mathematics, and computer science — fields I discovered after an early detour into commerce. From simulating polymers to exploring Monte Carlo methods, I’ve developed a strong interest in how we can model and understand complexity through code.</p>
+
+<p>Today, my goal is to build a powerful engineering profile in risk management and system reliability. In response to the needs of modern tech and the New Space movement, I want to become an engineer who can analyze systems in depth, identify potential failures, and design smarter, safer, and more resilient solutions. Through this approach, I hope to contribute to a more reliable and forward-thinking technological future.</p>
+    </div>
+  </section>
+
+  <section id="my-convictions" style="padding: 5rem 2rem; background-color: white;">
+  <div style="
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  ">
+
+    <!-- Texte à gauche -->
+    <div style="flex: 1 1 500px; max-width: 600px;">
+      <h2 style="font-family: 'IBM Plex Mono', monospace; font-size: 2.5rem; color: #0a2540; margin-bottom: 1.5rem;">
+        My Convictions
+      </h2>
+      <p style="font-family: 'Manrope', sans-serif; font-size: 1.125rem; line-height: 1.7; color: #333; margin-bottom: 1rem;">
+        Whether it's launching satellites, securing digital infrastructures, or managing financial risks, one principle unites these domains: the need for robust, reliable systems. My passion for risk & reliability engineering began with space missions—high-impact, high-risk ventures that also play a vital role in monitoring our planet. Satellites track rising sea levels, ice melt, and greenhouse gases—data critical to our survival. Seeing this complexity has driven me to want to improve the safety, sustainability, and efficiency of these essential systems.
+      </p>
+      <p style="font-family: 'Manrope', sans-serif; font-size: 1.125rem; line-height: 1.7; color: #333;">
+        In today’s fast-moving world, failures can have massive consequences—from cloud service outages affecting millions to financial mismanagement triggering global crises. Inspired by the NewSpace movement and its bold innovations, I want to contribute to building the next generation of resilient, cost-effective systems. My mission is to apply risk & reliability engineering across space, tech, and finance to help shape a safer, smarter, and more sustainable future.
+      </p>
+    </div>
+
+    <!-- Image à droite -->
+    <div style="flex: 1 1 400px; text-align: center;">
+      <img src="mars.png" alt="Satellite over Earth"
+     style="width: 100%; max-width: 800px; height: auto; margin-left: 20px;" />
+    </div>
+
+  </div>
+</section>
+  
+  <section id="education">
+    <div class="section-inner">
+      <h2>My Education</h2>
+      <div class="entry">
+        <div class="entry-title">Physics Bachelor – Université de Bourgogne (2021–2025)</div>
+        <div><p>
+  I joined a demanding physics program with no prior math or physics background. Starting with low grades, I pushed myself to become top of my class and student representative. This journey built a strong foundation in key areas essential for risk and reliability engineering:
+</p>
+
+<ul>
+  <li><strong>Mathematics:</strong> linear algebra, ordinary and partial differential equations, Fourier analysis</li>
+  <li><strong>Computer Science:</strong> gradient descent optimization, numerical methods like Gaussian elimination and Euler’s method</li>
+  <li><strong>Physics:</strong> statistical physics concepts (Boltzmann distribution, entropy, Ising model), electromagnetism, quantum mechanics basics</li>
+</ul>
+
+<p>
+  These skills equip me to model complex systems, analyze data, and develop predictive algorithms for system reliability and failure prevention.
+</p></div>
+      </div>
+      <div class="entry">
+        <div class="entry-title">Engineering degree – ISAE-ENSMA (2025–2028)</div>
+        <div><p>
+  During my bachelor's degree, I developed a strong passion for statistical physics and scientific computing, especially the simulation of complex systems. I became fascinated by how computers have revolutionized physics and mathematics, enabling solutions to problems once considered unsolvable.
+</p>
+
+<p>
+  Through this path, I aim to become an engineer who can model, simulate, and quantify uncertainty in highly technical systems. In today’s world, uncertainty is everywhere — in financial markets, aerospace, climate models, and autonomous vehicles.
+</p>
+
+<p>
+  As systems grow more complex, the ability to extract knowledge from data and simulate outcomes under uncertainty becomes a critical engineering skill. This quantitative, data-driven mindset is central to modern science and a key asset for any innovative company in aerospace, tech, or finance.
+</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="section-inner">
+      <h2>Professional Experiences</h2>
+      <div class="entry">
+        <div class="entry-title">Quantum physics research internship – Laboratoire Interdisciplinaire Carnot de Bourgogne (Jan 2025)</div>
+        <div><p>
+  During my internship on quantum technologies, I developed key skills to understand and optimize complex systems efficiently, supporting a more advanced technological future.
+</p>
+
+<ul>
+  <li>Expertise in quantum control theory and GRAPE optimization methods</li>
+  <li>MATLAB programming and code optimization for simulating qubit dynamics</li>
+  <li>Modeling of quantum systems including decoherence and drift effects</li>
+  <li>Design of time-dependent control fields using optimal control theory</li>
+  <li>Implementation of advanced algorithms (GRAPE) for pulse sequence optimization</li>
+  <li>Skills in ensuring numerical stability, accelerating convergence, and maintaining physical relevance of simulations</li>
+</ul>
+</ul></div>
+      </div>
+      <div class="entry">
+        <div class="entry-title">Private Tutor – Maths &amp; Physics</div>
+        <div><p>
+  As a private tutor supporting adults transitioning into scientific careers, I developed essential skills in personalized education and mentorship to help learners succeed in STEM.
+</p>
+
+<ul>
+  <li>Ability to design tailored tutoring programs addressing diverse academic backgrounds and goals</li>
+  <li>Expertise in teaching mathematics and physics from fundamentals to advanced topics</li>
+  <li>Strong mentoring and motivational support skills ensuring sustained learner progress</li>
+  <li>Enhanced communication and empathy developed through shared experience of career transition</li>
+  <li>Experience guiding adult learners effectively back into academic paths in STEM fields</li>
+</ul>
+
+<p>
+  These skills are indispensable for positions with responsibility, and I firmly believe that human contact, which lies at the heart of our profession, plays a decisive role in success.
+</p>
+</ul></div>
+      </div>
+    </div>
+  </section>
+
+  
+
+
+<section id="projects">
+  <div class="section-inner">
+    <h2>
+      Projects
+      <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg"
+           alt="GitHub logo"
+           style="width:36px;height:36px;vertical-align:middle;margin-left:12px;filter:invert(34%) sepia(98%) saturate(2805%) hue-rotate(202deg) brightness(100%) contrast(96%);" />
+    </h2>
+
+    <div class="projects-zigzag">
+
+      <div class="project-group">
+        <a class="project-card" href="https://github.com/MaximeJLT/Ising-Model" target="_blank" rel="noopener">
+          <div class="entry">
+            <div class="entry-title">Ising Model – Monte Carlo Simulations</div>
+            <div>Simulated the 2D Ising model using the Metropolis algorithm to explore phase transitions. Analyzed the behavior of magnetic spins on a lattice, computed magnetization, and visualized cluster formation depending on temperature.</div>
+            <div class="project-rectangles">
+              <span>Python</span><span>Monte Carlo</span><span>Ising</span><span>Simulation</span>
+            </div>
+          </div>
+        </a>
+        <img class="project-illustration" src="ising_clusters.gif" alt="Ising"
+             style="--overlap: 56px; --shift: 160px;">
+      </div>
+
+      <div class="project-group">
+        <a class="project-card" href="#" target="_blank" rel="noopener">
+          <div class="entry">
+            <div class="entry-title">Freely Jointed Chain – Polymer Simulation</div>
+            <div>Implemented a random walk algorithm to simulate a polymer chain in 3D, where each segment is free to orient inside a unit sphere. Studied conformational entropy and probability distributions of end-to-end distances.</div>
+            <div class="project-rectangles">
+              <span>MATLAB</span><span>Random Walk</span><span>3D Model</span><span>Polymers</span>
+            </div>
+          </div>
+        </a>
+        <img class="project-illustration" src="p.png" alt="Polymer"
+             style="--overlap: 50px; --shift: 150px;">
+      </div>
+
+      <div class="project-group">
+        <a class="project-card" href="https://github.com/MaximeJLT/Graphene-Cohesion-Energy" target="_blank" rel="noopener">
+          <div class="entry">
+            <div class="entry-title">Cohesion Energy – Graphene Potential</div>
+            <div>Modeled atomic interactions in a 2D graphene lattice using a Lennard-Jones potential. Calculated potential energy landscapes at various adsorption sites (Top, Bridge, Hole), and exported XYZ files for visualization.</div>
+            <div class="project-rectangles">
+              <span>MATLAB</span><span>Lennard-Jones</span><span>Graphene</span><span>XYZ Export</span>
+            </div>
+          </div>
+        </a>
+        <img class="project-illustration" src="g.png" alt="Graphene"
+             style="--overlap: 50px; --shift: 150px;">
+      </div>
+
+      <div class="project-group">
+        <a class="project-card" href="https://github.com/MaximeJLT/Portfolio-simulation?tab=readme-ov-file#risky-portfolio-simulation-using-the-binomial-distribution" target="_blank" rel="noopener">
+          <div class="entry">
+            <div class="entry-title">Risky Portfolio Simulation – Binomial &amp; Geometric Models (R)</div>
+            <div>This project simulates the behavior of a risky financial portfolio using R…</div>
+            <div class="project-rectangles">
+              <span><strong>R</strong></span><span>Binomial</span><span>Geometric</span><span>Finance</span>
+            </div>
+          </div>
+        </a>
+        <img class="project-illustration" src="b.png" alt="Portfolio"
+             style="--overlap: 48px; --shift: 140px;">
+      </div>
+
+      <div class="project-group">
+        <a class="project-card" href="https://github.com/MaximeJLT/Random-Walker/tree/main" target="_blank" rel="noopener">
+          <div class="entry">
+            <div class="entry-title">Random Walkers – Diffusion Process</div>
+            <div>Simulated the movement of thousands of particles undergoing random motion in 2D…</div>
+            <div class="project-rectangles">
+              <span>MATLAB</span><span>Random Walk</span><span>Diffusion</span><span>2D Model</span>
+            </div>
+          </div>
+        </a>
+        <img class="project-illustration" src="r.gif" alt="Random walk"
+             style="--overlap: 52px; --shift: 155px;">
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<section id="skills">
+  <div class="section-inner">
+    <h2 style="text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 2rem; color: #002b5c; margin-bottom: 2.5rem;">
+      CORE COMPETENCIES
+    </h2>
+    <div style="display: flex; gap: 1.5rem; justify-content: space-between; flex-wrap: wrap;">
+      
+      <!-- Bloc 1 -->
+      <div style="flex: 1; min-width: 280px; background: #f0f0f0; padding: 1.8rem; border-radius: 10px;">
+        <h3 style="font-size: 1.4rem; font-family: 'IBM Plex Mono', monospace; color: #002b5c; margin-bottom: 1.2rem;">Engineering & Research</h3>
+        <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+          <span style="border-left: 3px solid #0056b3; padding-left: 0.6rem;">Signal & Systems</span>
+          <span style="border-left: 3px solid #0056b3; padding-left: 0.6rem;">Fluid and solid mechanics</span>
+          <span style="border-left: 3px solid #0056b3; padding-left: 0.6rem;">Linear algebra</span>
+          <span style="border-left: 3px solid #0056b3; padding-left: 0.6rem;">Statistics and probability</span>
+          <span style="border-left: 3px solid #0056b3; padding-left: 0.6rem;">Aerodynamics & propulsion</span>
+          <span style="border-left: 3px solid #0056b3; padding-left: 0.6rem;">Thermodynamics</span>
+          <span style="border-left: 3px solid #0056b3; padding-left: 0.6rem;">Data analysis</span>
+        </div>
+      </div>
+
+      <!-- Bloc 2 -->
+      <div style="flex: 1; min-width: 280px; background: #f0f0f0; padding: 1.8rem; border-radius: 10px;">
+        <h3 style="font-size: 1.4rem; font-family: 'IBM Plex Mono', monospace; color: #002b5c; margin-bottom: 1.2rem;">Programming & Simulation</h3>
+        <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+          <span style="border-left: 3px solid #0056b3; padding-left: 0.6rem;">Monte Carlo simulations</span>
+          <span style="border-left: 3px solid #0056b3; padding-left: 0.6rem;">Statistical modeling</span>
+          <span style="border-left: 3px solid #0056b3; padding-left: 0.6rem;">Python (NumPy, SciPy, Pandas)</span>
+          <span style="border-left: 3px solid #0056b3; padding-left: 0.6rem;">C (std, math.h)</span>
+          <span style="border-left: 3px solid #0056b3; padding-left: 0.6rem;">C++ (STL, cmath)</span>
+        </div>
+      </div>
+
+      <!-- Bloc 3 -->
+      <div style="flex: 1; min-width: 280px; background: #f0f0f0; padding: 1.8rem; border-radius: 10px;">
+        <h3 style="font-size: 1.4rem; font-family: 'IBM Plex Mono', monospace; color: #002b5c; margin-bottom: 1.2rem;">Soft Skills</h3>
+        <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+          <span style="border-left: 3px solid #0056b3; padding-left: 0.6rem;">Project management</span>
+          <span style="border-left: 3px solid #0056b3; padding-left: 0.6rem;">Public speaking (English)</span>
+          <span style="border-left: 3px solid #0056b3; padding-left: 0.6rem;">Empathy and teamwork</span>
+          <span style="border-left: 3px solid #0056b3; padding-left: 0.6rem;">Client relations</span>
+          <span style="border-left: 3px solid #0056b3; padding-left: 0.6rem;">Guidance and mentoring</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- Programming Languages Section -->
+<section id="programming">
+  <div class="section-inner">
+    <h2>Programming Languages</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+
+      <div style="flex: 1; min-width: 200px;">
+        <strong>Python</strong><br>
+        <small>Intermediate</small>
+        <div style="background: #ccc; height: 6px; border-radius: 6px; overflow: hidden;">
+          <div style="background: #00e1ff; width: 50%; height: 100%;"></div>
+        </div>
+      </div>
+
+      <div style="flex: 1; min-width: 200px;">
+        <strong>MATLAB</strong><br>
+        <small>Intermediate</small>
+        <div style="background: #ccc; height: 6px; border-radius: 6px; overflow: hidden;">
+          <div style="background: #ff0000; width: 50%; height: 100%;"></div>
+        </div>
+      </div>
+
+      <div style="flex: 1; min-width: 200px;">
+        <strong>C</strong><br>
+        <small>Beginner</small>
+        <div style="background: #ccc; height: 6px; border-radius: 6px; overflow: hidden;">
+          <div style="background: #f300b6; width: 25%; height: 100%;"></div>
+        </div>
+      </div>
+
+      <div style="flex: 1; min-width: 200px;">
+        <strong>C++</strong><br>
+        <small>Beginner</small>
+        <div style="background: #ccc; height: 6px; border-radius: 6px; overflow: hidden;">
+          <div style="background: #0070f3; width: 25%; height: 100%;"></div>
+        </div>
+      </div>
+
+      <div style="flex: 1; min-width: 200px;">
+        <strong>R</strong><br>
+        <small>Basic</small>
+        <div style="background: #ccc; height: 6px; border-radius: 6px; overflow: hidden;">
+          <div style="background: #29f300; width: 15%; height: 100%;"></div>
+        </div>
+      </div>
+
+      <div style="flex: 1; min-width: 200px;">
+        <strong>HTML</strong><br>
+        <small>Basic</small>
+        <div style="background: #ccc; height: 6px; border-radius: 6px; overflow: hidden;">
+          <div style="background: #f38e00; width: 12.5%; height: 100%;"></div>
+        </div>
+      </div>
+
+      <div style="flex: 1; min-width: 200px;">
+        <strong>LaTeX</strong><br>
+        <small>Advanced</small>
+        <div style="background: #ccc; height: 6px; border-radius: 6px; overflow: hidden;">
+          <div style="background: #f3f300; width: 90.9%; height: 100%;"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 4. AJOUTER LA SECTION "LANGUAGES" -->
+<section id="languages">
+  <div class="section-inner">
+    <h2>Languages</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+      <span style="background: #e0e0e0; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600;">French : native</span>
+      <span style="background: #e0e0e0; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600;">English : C1+ level</span>
+      <span style="background: #e0e0e0; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600;">Spanish : A1+ level</span>
+      <span style="background: #e0e0e0; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600;">Chinese : A1 level</span>
+    </div>
+  </div>
+</section>
+
+  <section id="passions">
+    <div class="section-inner">
+      <h2>Outside the Lab</h2>
+      <div class="zigzag">
+        <div class="passion-item">
+          <img src="IMG_2941 3.jpg" alt="Nature travel">
+          <div class="square-entry">
+            <h3>Nature &amp; Travel</h3>
+            <p>I've always had a deep passion for life and the universe. As a child, I loved analyzing my environment and understanding how things worked. This natural curiosity guided me toward engineering and simulation. I spent my youth raising reptiles, exploring wild places, and observing the beauty of nature. Discovering statistical physics was a revelation — it showed me how human civilization is built on nature's laws. To me, a modern city skyline can be just as beautiful as a mountain range in the Alps.</p>
+          </div>
+        </div>
+        <div class="passion-item">
+          <img src="IMG_1588 5.jpg" alt="Fitness food">
+          <div class="square-entry">
+            <h3>Fitness &amp; Nutrition</h3>
+            <p>To perform well professionally, I must perform at the gym too. Physical and mental health are inseparable. I dedicate 1.5 to 2 hours per day to bodybuilding. I enjoy crafting healthy recipes, tracking macro and micronutrients, and building the discipline that keeps me going — especially in difficult moments when I doubted myself during my academic transition.</p>
+          </div>
+        </div>
+        <div class="passion-item">
+          <img src="d0d9959_1658597511110-5c93113d2300004b00ae1781.jpeg" alt="Books">
+          <div class="square-entry">
+            <h3>Cinema &amp; Literature</h3>
+            <p>Cinema and literature are my favorite forms of art. I'm deeply moved by existential works that question the essence of human nature. My favorites include <em>Blood Meridian</em>, <em>Fight Club</em>, <em>American Psycho</em>, and <em>The Silence of the Lambs</em>. Cinema engages multiple senses and, like literature, makes us reflect on our own paths and identities.</p>
+          </div>
+        </div>
+        <div class="passion-item">
+          <img src="IMG_2509.jpg" alt="Fashion city">
+          <div class="square-entry">
+            <h3>Style &amp; Expression</h3>
+            <p>Cinema also sparked my interest in classic men's fashion. I believe our appearance — from clothing to grooming — reflects who we are and who we aspire to be. It's not superficial; it's expressive.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recruiter Documentation Section -->
+<section id="recruiter-docs" style="margin-top: 4rem;">
+  <div class="section-inner">
+    <h2>Recruiter Resources</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+      <a href="docs/pdf.pdf" download style="background-color: #002244; color: white; padding: 0.75rem 1.25rem; border-radius: 6px; text-decoration: none;">Physics Transcript</a>
+      <a href="docs/Recommandation.pdf" download style="background-color: #002244; color: white; padding: 0.75rem 1.25rem; border-radius: 6px; text-decoration: none;">Recommendation Letter</a>
+      <a href="docs/CV%20ingenieur.pdf" download style="background-color: #002244; color: white; padding: 0.75rem 1.25rem; border-radius: 6px; text-decoration: none;">Curriculum Vitae (CV)</a>
+    </div>
+  </div>
+</section>
+
+<!-- Update Navigation Bar -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const nav = document.querySelector("nav ul");
+    if (nav) {
+      const docLink = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = "#recruiter-docs";
+      a.textContent = "Resources";
+      docLink.appendChild(a);
+      nav.appendChild(docLink);
+    }
+  });
+
+ 
+
+document.addEventListener("DOMContentLoaded", function () {
+      const cursor = document.querySelector(".custom-cursor");
+
+      document.addEventListener("mousemove", (e) => {
+        cursor.style.left = `${e.clientX}px`;
+        cursor.style.top = `${e.clientY}px`;
+      });
+    });
+  
+
+</script>
+
+  <footer style="padding: 2rem 1rem; background-color: #f0f2f5;">
+  <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem;">
+    <a href="https://github.com/maximejlt" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/in/maxime-jolliot-🚀-1a3183342/" target="_blank">LinkedIn</a>
+  </div>
+  <p style="text-align: center;">© 2025 Maxime Jolliot</p>
+</footer>
+</body>
+</html>
