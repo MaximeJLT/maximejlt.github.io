@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Maxime Jolliot</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * {
@@ -478,6 +479,190 @@
 
 
 
+/* === PROJECTS — CLEAN, COMPACT & SAFE (zigzag + images réduites + halo) === */
+#projects .projects-zigzag{
+  display:grid; gap:0; margin-top:6rem;
+}
+
+#projects .project-group{
+  display:grid; grid-template-columns:repeat(12,1fr);
+  position:relative; overflow:visible;
+  /* variables */
+  --card-span:9; --img-span:5;
+  --edge-push:100%;          /* pousse un peu plus vers les bords */
+  --reveal:44%;
+  --img-shift:0%;          /* léger décalage image vers l’EXTÉRIEUR */
+  --img-lower:18%;
+}
+
+/* Cartes (au-dessus) */
+#projects .project-card{ display:block; text-decoration:none; color:inherit; position:relative; z-index:3; }
+#projects .project-card .entry{
+  padding:1.45rem 1.6rem 1.45rem;
+  border-radius:12px;
+  box-shadow:
+    0 16px 40px rgba(0,112,243,.18),
+    0 6px 18px rgba(0,112,243,.12);
+  background:#fff;
+  overflow:visible;
+}
+#projects .project-card .entry:hover{
+  box-shadow:
+    0 22px 60px rgba(0,112,243,.28),
+    0 10px 24px rgba(0,112,243,.18);
+}
+#projects .project-card .entry,
+#projects .project-card .entry *{
+  white-space:normal; overflow:visible; text-overflow:clip;
+}
+#projects .project-card .entry .entry-title{
+  display:block; margin-bottom:1rem; line-height:1.25;
+  font-weight:600; font-size:1.2rem; color:#002b5c; text-align:inherit;
+}
+
+/* Images (dessous) — petites */
+#projects .project-illustration{
+  width:clamp(180px, 18vw, 340px);
+  height:auto; background:transparent; border:0; border-radius:0;
+  filter:drop-shadow(0 22px 60px rgba(0,0,0,.25));
+  position:relative; z-index:1;
+  transform:translateY(calc(-1*(100% - var(--reveal)) + var(--img-lower)));
+  will-change:transform;
+}
+
+/* Impairs : carte à gauche, image vers l’EXTÉRIEUR (gauche) */
+#projects .project-group:nth-child(odd) .project-card{
+  grid-column:1 / span var(--card-span);
+  transform:translateX(calc(-1*var(--edge-push)));
+  text-align:left;
+}
+#projects .project-group:nth-child(odd) .project-illustration{
+  grid-column:calc(var(--card-span) - var(--img-span) + 1) / span var(--img-span);
+  justify-self:start;  /* ancrage côté gauche */
+  transform:
+    translateY(calc(-1*(100% - var(--reveal)) + var(--img-lower)))
+    translateX(calc(-1*var(--img-shift))); /* ← vers l’extérieur */
+}
+
+/* Pairs : carte à droite, image vers l’EXTÉRIEUR (droite) */
+#projects .project-group:nth-child(even) .project-card{
+  grid-column:calc(13 - var(--card-span)) / span var(--card-span);
+  transform:translateX(var(--edge-push));
+  text-align:right;
+}
+#projects .project-group:nth-child(even) .project-illustration{
+  grid-column:calc(13 - var(--card-span)) / span var(--img-span);
+  justify-self:end;    /* ancrage côté droit */
+  transform:
+    translateY(calc(-1*(100% - var(--reveal)) + var(--img-lower)))
+    translateX(var(--img-shift));         /* → vers l’extérieur */
+}
+
+/* Zigzag plus sur les bords par groupe (léger) */
+#projects .project-group:nth-child(1){ --edge-push:24%; }
+#projects .project-group:nth-child(2){ --edge-push:26%; }
+#projects .project-group:nth-child(3){ --edge-push:24%; }
+#projects .project-group:nth-child(4){ --edge-push:26%; }
+#projects .project-group:nth-child(5){ --edge-push:24%; }
+
+/* Tags */
+#projects .project-rectangles{
+  margin-top:0.35rem; padding-top:0.35rem; gap:6px;
+  border-top:1px solid #e9e9e9; display:flex; flex-wrap:wrap; justify-content:center;
+}
+
+/* Responsive */
+@media (max-width:1200px){
+  #projects .project-group{ --edge-push:16%; --img-shift:32%; }
+  #projects .project-illustration{ width:clamp(160px, 16vw, 300px); }
+}
+@media (max-width:1024px){
+  #projects .project-group{
+    --card-span:7; --img-span:5; --edge-push:12%;
+    --reveal:40%; --img-shift:24%; --img-lower:10%;
+  }
+  #projects .project-illustration{ width:clamp(150px, 22vw, 280px); }
+}
+@media (max-width:768px){
+  #projects .project-group{ grid-template-columns:1fr; --edge-push:0%; --reveal:24%; --img-shift:0%; --img-lower:0%; }
+  #projects .project-card{ grid-column:1 / -1; transform:none; text-align:left; }
+  #projects .project-illustration{ grid-column:1 / -1; width:80vw; justify-self:center; transform:none; }
+}
+
+#projects .project-group {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+#projects .projects-zigzag {
+  gap: 0.1rem; /* espace vertical minimal */
+}
+
+
+/* Icône "ouvrir" ↗ par défaut (cartes à gauche) */
+#projects .project-card::after {
+  content: "↗";
+  font-size: 1rem;
+  color: #0070f3;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  opacity: 0.6;
+  transition: all 0.25s ease;
+  pointer-events: none;
+}
+
+/* Cartes à droite → icône à gauche */
+#projects .project-group:nth-child(even) .project-card::after {
+  left: 1rem;
+  right: auto;
+}
+
+/* Effet au survol */
+#projects .project-card:hover::after {
+  opacity: 1;
+  transform: translate(3px, -3px);
+}
+
+/* Survol pour cartes à droite : déplacement inversé */
+#projects .project-group:nth-child(even) .project-card:hover::after {
+  transform: translate(-3px, -3px);
+}
+
+
+.entry ul {
+  list-style: none; /* enlever les puces par défaut */
+  padding-left: 0;
+  margin-top: 0.5rem;
+}
+
+.entry ul li {
+  position: relative;
+  padding-left: 1.2rem; /* espace pour la puce custom */
+  margin-bottom: 0.4rem; /* espace réduit entre lignes */
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.entry ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 6px;
+  height: 6px;
+  background-color: #0056b3; /* bleu minimaliste */
+  border-radius: 50%;
+}
+
+#projects .project-card .entry {
+  margin-bottom: 0;
+  padding: 1.2rem 1.4rem; /* réduire un peu le padding interne aussi */
+}
+
+
+
+
   </style>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -545,8 +730,9 @@
       <div><span>Age</span>23 years old</div>
     </div>
     <div class="bio-description">
-      <p>I'm a first-year engineering student at ISAE-ENSMA, passionate about applying advanced mathematics, physics, and computer science to complex, high-stakes systems. From working on optimal control problems to exploring Monte Carlo methods, I’ve developed a strong interest in modelling uncertainty, optimising strategies, and turning data into actionable insights.</p> 
-      <p>My goal is to build a quantitative engineering profile at the crossroads of cutting-edge technology, finance, and the New Space sector. By mastering mathematical modelling, statistical analysis, and algorithmic optimisation, I aim to contribute to high-performance, data-driven decision-making — whether it’s managing risk and identifying optimal positions in a trading desk, or designing smarter and more resilient systems for the next generation of space technology.</p>
+      <p>I'm a first-year engineering student at ISAE-ENSMA, with a deep passion for science, systems, and exploration. I’m particularly drawn to the intersection of physics, mathematics, and computer science — fields I discovered after an early detour into commerce. From simulating polymers to exploring Monte Carlo methods, I’ve developed a strong interest in how we can model and understand complexity through code.</p>
+
+<p>Today, my goal is to build a powerful engineering profile in risk management and system reliability. In response to the needs of modern tech and the New Space movement, I want to become an engineer who can analyze systems in depth, identify potential failures, and design smarter, safer, and more resilient solutions. Through this approach, I hope to contribute to a more reliable and forward-thinking technological future.</p>
     </div>
   </section>
 
@@ -660,74 +846,97 @@
     </div>
   </section>
 
-  <section id="projects">
+  
+
+
+<section id="projects">
   <div class="section-inner">
     <h2>
       Projects
-      <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg" alt="GitHub logo" style="width: 36px; height: 36px; vertical-align: middle; margin-left: 12px; filter: invert(34%) sepia(98%) saturate(2805%) hue-rotate(202deg) brightness(100%) contrast(96%);" />
+      <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg"
+           alt="GitHub logo"
+           style="width:36px;height:36px;vertical-align:middle;margin-left:12px;filter:invert(34%) sepia(98%) saturate(2805%) hue-rotate(202deg) brightness(100%) contrast(96%);" />
     </h2>
 
-    <a href="https://github.com/MaximeJLT/Ising-Model" target="_blank" style="text-decoration: none; color: inherit;">
-      <div class="entry" style="cursor: pointer;">
-      <div class="entry-title">Ising Model – Monte Carlo Simulations</div>
-      <div>Simulated the 2D Ising model using the Metropolis algorithm to explore phase transitions. Analyzed the behavior of magnetic spins on a lattice, computed magnetization, and visualized cluster formation depending on temperature.</div>
-      <div class="project-rectangles">
-        <span>Python</span>
-        <span>Monte Carlo</span>
-        <span>Ising</span>
-        <span>Simulation</span>
-      </div>
-    </div>
+    <div class="projects-zigzag">
 
-    <div class="entry">
-      <div class="entry-title">Freely Jointed Chain – Polymer Simulation</div>
-      <div>Implemented a random walk algorithm to simulate a polymer chain in 3D, where each segment is free to orient inside a unit sphere. Studied conformational entropy and probability distributions of end-to-end distances.</div>
-      <div class="project-rectangles">
-        <span>MATLAB</span>
-        <span>Random Walk</span>
-        <span>3D Model</span>
-        <span>Polymers</span>
-      </div>
-    </div>
-
-    <a href="https://github.com/MaximeJLT/Graphene-Cohesion-Energy" target="_blank" style="text-decoration: none; color: inherit;">
-      <div class="entry" style="cursor: pointer;">
-        <div class="entry-title">Cohesion Energy – Graphene Potential</div>
-        <div>Modeled atomic interactions in a 2D graphene lattice using a Lennard-Jones potential. Calculated potential energy landscapes at various adsorption sites (Top, Bridge, Hole), and exported XYZ files for visualization.</div>
-        <div class="project-rectangles">
-          <span>MATLAB</span>
-          <span>Lennard-Jones</span>
-          <span>Graphene</span>
-          <span>XYZ Export</span>
-        </div>
+      <div class="project-group">
+        <a class="project-card" href="https://github.com/MaximeJLT/Ising-Model" target="_blank" rel="noopener">
+          <div class="entry">
+            <div class="entry-title">Ising Model – Monte Carlo Simulations</div>
+            <div>Simulated the 2D Ising model using the Metropolis algorithm to explore phase transitions. Analyzed the behavior of magnetic spins on a lattice, computed magnetization, and visualized cluster formation depending on temperature.</div>
+            <div class="project-rectangles">
+              <span>Python</span><span>Monte Carlo</span><span>Ising</span><span>Simulation</span>
+            </div>
+          </div>
+        </a>
+        <img class="project-illustration" src="ising_clusters.gif" alt="Ising"
+             style="--overlap: 56px; --shift: 160px;">
       </div>
 
-    <a href="https://github.com/MaximeJLT/Portfolio-simulation?tab=readme-ov-file#risky-portfolio-simulation-using-the-binomial-distribution" target="_blank" style="text-decoration: none; color: inherit;">
-      <div class="entry" style="cursor: pointer;">
-    <div class="entry-title">Risky Portfolio Simulation – Binomial & Geometric Models (R)</div>
-    <div>This project simulates the behavior of a risky financial portfolio using R. The first part models portfolio gains over a fixed number of days using a binomial distribution, allowing analysis of how the number of successful investment days evolves with time. The second part models the waiting time until the first successful gain using a geometric distribution. Both simulations use simple Monte Carlo techniques to build intuition about probabilistic events in finance.</div>
-    <div class="project-rectangles">
-      <span><strong>R</strong></span>
-      <span>Binomial</span>
-      <span>Geometric</span>
-      <span>Finance</span>
+      <div class="project-group">
+        <a class="project-card" href="#" target="_blank" rel="noopener">
+          <div class="entry">
+            <div class="entry-title">Freely Jointed Chain – Polymer Simulation</div>
+            <div>Implemented a random walk algorithm to simulate a polymer chain in 3D, where each segment is free to orient inside a unit sphere. Studied conformational entropy and probability distributions of end-to-end distances.</div>
+            <div class="project-rectangles">
+              <span>C</span><span>Random Walk</span><span>3D Model</span><span>Polymers</span>
+            </div>
+          </div>
+        </a>
+        <img class="project-illustration" src="p.png" alt="Polymer"
+             style="--overlap: 50px; --shift: 150px;">
       </div>
-     </div>
-    </a>
 
-    <a href="https://github.com/MaximeJLT/Random-Walker/tree/main" target="_blank" style="text-decoration: none; color: inherit;">
-      <div class="entry" style="cursor: pointer;">
-      <div class="entry-title">Random Walkers – Diffusion Process</div>
-      <div>Simulated the movement of thousands of particles undergoing random motion in 2D. Analyzed their spatial distribution over time, computed mean squared displacement, and confirmed the diffusion law.</div>
-      <div class="project-rectangles">
-        <span>MATLAB</span>
-        <span>Random Walk</span>
-        <span>Diffusion</span>
-        <span>2D Model</span>
+      <div class="project-group">
+        <a class="project-card" href="https://github.com/MaximeJLT/Graphene-Cohesion-Energy" target="_blank" rel="noopener">
+          <div class="entry">
+            <div class="entry-title">Cohesion Energy – Graphene Potential</div>
+            <div>Modeled atomic interactions in a 2D graphene lattice using a Lennard-Jones potential. Calculated potential energy landscapes at various adsorption sites (Top, Bridge, Hole), and exported XYZ files for visualization.</div>
+            <div class="project-rectangles">
+              <span>C++</span><span>Lennard-Jones</span><span>Graphene</span><span>XYZ Export</span>
+            </div>
+          </div>
+        </a>
+        <img class="project-illustration" src="g.png" alt="Graphene"
+             style="--overlap: 50px; --shift: 150px;">
       </div>
+
+      <div class="project-group">
+        <a class="project-card" href="https://github.com/MaximeJLT/Portfolio-simulation?tab=readme-ov-file#risky-portfolio-simulation-using-the-binomial-distribution" target="_blank" rel="noopener">
+          <div class="entry">
+            <div class="entry-title">Risky Portfolio Simulation – Binomial &amp; Geometric Models (R)</div>
+            <div>This project simulates the behavior of a risky financial portfolio using R. The first part models portfolio gains over a fixed number of days using a binomial distribution, allowing analysis of how the number of successful investment days evolves with time. The second part models the waiting time until the first successful gain using a geometric distribution. Both simulations use simple Monte Carlo techniques to build intuition about probabilistic events in finance.</div>
+            <div class="project-rectangles">
+              <span><strong>R</strong></span><span>Binomial</span><span>Geometric</span><span>Finance</span>
+            </div>
+          </div>
+        </a>
+        <img class="project-illustration" src="b-2.png" alt="Portfolio"
+             style="--overlap: 48px; --shift: 140px;">
+      </div>
+
+      <div class="project-group">
+        <a class="project-card" href="https://github.com/MaximeJLT/Random-Walker/tree/main" target="_blank" rel="noopener">
+          <div class="entry">
+            <div class="entry-title">Random Walkers – Diffusion Process</div>
+            <div>Simulated the movement of thousands of particles undergoing random motion in 2D. Analyzed their spatial distribution over time, computed mean squared displacement, and confirmed the diffusion law.</div>
+            <div class="project-rectangles">
+              <span>MATLAB</span><span>Random Walk</span><span>Diffusion</span><span>2D Model</span>
+            </div>
+          </div>
+        </a>
+        <img class="project-illustration" src="r.gif" alt="Random walk"
+             style="--overlap: 52px; --shift: 155px;">
+      </div>
+
     </div>
   </div>
 </section>
+
+
+
+
 
 <section id="skills">
   <div class="section-inner">
@@ -898,7 +1107,7 @@
 <section id="recruiter-docs" style="margin-top: 4rem;">
   <div class="section-inner">
     <h2>Recruiter Resources</h2>
-    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+    <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
       <a href="docs/pdf.pdf" download style="background-color: #002244; color: white; padding: 0.75rem 1.25rem; border-radius: 6px; text-decoration: none;">Physics Transcript</a>
       <a href="docs/Recommandation.pdf" download style="background-color: #002244; color: white; padding: 0.75rem 1.25rem; border-radius: 6px; text-decoration: none;">Recommendation Letter</a>
       <a href="docs/CV%20ingenieur.pdf" download style="background-color: #002244; color: white; padding: 0.75rem 1.25rem; border-radius: 6px; text-decoration: none;">Curriculum Vitae (CV)</a>
