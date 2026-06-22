@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Autonomous UAV — Maxime Jolliot</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛩️</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{ --navy:#002b5c; --blue-700:#004aad; --blue-600:#0056b3; --blue-500:#0070f3; --cyan:#00e1ff; --bg:#f8f9fa; --ink:#111; --card:#fff; }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Manrope', sans-serif; }
+    html { scroll-behavior:smooth; }
+    body { background:var(--bg); color:var(--ink); font-size:17px; line-height:1.7; overflow-x:hidden; }
+    a { color:var(--blue-600); }
+    .topbar { position:sticky; top:0; z-index:50; display:flex; justify-content:space-between; align-items:center; padding:.8rem 1.5rem; background:rgba(255,255,255,.82); backdrop-filter:saturate(160%) blur(12px); -webkit-backdrop-filter:saturate(160%) blur(12px); border-bottom:1px solid #e3e8f0; }
+    .topbar .back { font-family:'IBM Plex Mono', monospace; font-size:.85rem; text-decoration:none; color:var(--blue-600); display:inline-flex; align-items:center; gap:.45rem; }
+    .topbar .back .a { transition:transform .25s ease; } .topbar .back:hover .a { transform:translateX(-4px); }
+    .btn { font-family:'IBM Plex Mono', monospace; font-size:.85rem; font-weight:600; text-decoration:none; padding:.6rem 1.1rem; border-radius:8px; display:inline-flex; align-items:center; gap:.5rem; transition: all .25s ease; }
+    .btn.primary { background:var(--navy); color:#fff; box-shadow:0 8px 20px rgba(0,43,92,.2); }
+    .btn.primary:hover { background:#00224a; transform:translateY(-2px); box-shadow:0 14px 30px rgba(0,43,92,.3); }
+    .btn.ghost { background:#fff; color:var(--navy); border:1.5px solid #cfe0f7; }
+    .btn.ghost:hover { background:#eef4ff; }
+
+    .hero { position:relative; overflow:hidden; padding:5.5rem 1.5rem 4.5rem; background:radial-gradient(1000px 520px at 80% 10%, #eaf1fb 0%, #f1f4f8 55%, #eef2f7 100%); }
+    .hero .blob { position:absolute; border-radius:50%; filter:blur(60px); opacity:.5; z-index:0; }
+    .hero .blob.b1 { width:380px; height:380px; background:radial-gradient(circle,#bcd6f7,transparent 70%); top:-80px; right:-60px; animation:drift 16s ease-in-out infinite; }
+    .hero .blob.b2 { width:300px; height:300px; background:radial-gradient(circle,#c9f3fb,transparent 70%); bottom:-120px; left:-40px; animation:drift 20s ease-in-out infinite reverse; }
+    @keyframes drift { 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(30px,-24px); } }
+    .hero-inner { position:relative; z-index:2; max-width:900px; margin:auto; }
+    .eyebrow { font-family:'IBM Plex Mono', monospace; font-size:.8rem; letter-spacing:.28em; text-transform:uppercase; color:var(--blue-600); }
+    .eyebrow::before { content:"◇ "; color:var(--cyan); }
+    h1 { font-family:'IBM Plex Mono', monospace; font-size:clamp(2.1rem,5vw,3.3rem); color:var(--navy); margin:.8rem 0 1rem; line-height:1.1; }
+    .lede { font-size:1.25rem; color:#33415a; max-width:680px; }
+    .hero-cta { margin-top:2rem; display:flex; gap:.8rem; flex-wrap:wrap; }
+    .award { display:inline-flex; align-items:center; gap:.5rem; margin-top:1.6rem; font-family:'IBM Plex Mono', monospace; font-size:.82rem; color:var(--navy); background:#fff; border:1px solid #ffe2a8; box-shadow:0 6px 18px rgba(0,43,92,.08); padding:.5rem .9rem; border-radius:999px; }
+
+    main { max-width:900px; margin:auto; padding:1rem 1.5rem 2rem; }
+    section.block { padding:3rem 0; border-bottom:1px solid #eef1f6; }
+    section.block:last-of-type { border-bottom:0; }
+    h2 { font-family:'IBM Plex Mono', monospace; font-size:1.6rem; color:var(--blue-700); margin-bottom:1rem; }
+    p.body { font-size:1.08rem; color:#2b3651; margin-bottom:1rem; }
+    .callout { background:#fff; border-left:4px solid var(--blue-500); border-radius:10px; padding:1.1rem 1.3rem; box-shadow:0 8px 24px rgba(0,43,92,.07); margin:1.2rem 0; }
+    .callout strong { color:var(--navy); }
+
+    /* pipeline diagram */
+    .pipeline { position:relative; display:flex; flex-wrap:wrap; gap:.7rem; align-items:stretch; margin:1.6rem 0 .6rem; }
+    .step { flex:1; min-width:130px; background:#fff; border:1px solid #e3e9f3; border-radius:12px; padding:1rem; text-align:center; box-shadow:0 8px 22px rgba(0,43,92,.08); position:relative; }
+    .step .k { font-family:'IBM Plex Mono', monospace; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--blue-500); }
+    .step .v { font-weight:700; color:var(--navy); margin-top:.25rem; font-size:.98rem; }
+    .step:not(:last-child)::after { content:"→"; position:absolute; right:-.62rem; top:50%; transform:translateY(-50%); color:var(--blue-500); font-weight:700; z-index:3; }
+    @media (max-width:620px){ .step:not(:last-child)::after { content:"↓"; right:auto; left:50%; top:auto; bottom:-.62rem; transform:translateX(-50%);} }
+    .flow { height:3px; background:linear-gradient(90deg, rgba(0,112,243,.15), rgba(0,112,243,.15)); border-radius:3px; position:relative; overflow:hidden; margin-top:.4rem; }
+    .flow::after { content:""; position:absolute; top:0; left:-30%; width:30%; height:100%; background:linear-gradient(90deg, transparent, var(--cyan), transparent); animation:slide 2.4s linear infinite; }
+    @keyframes slide { to { left:120%; } }
+
+    .gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin-top:1.2rem; }
+    .shot { position:relative; aspect-ratio:4/3; border-radius:12px; overflow:hidden; background:linear-gradient(135deg,#e9eff7,#dbe6f5); border:1px solid #e3e9f3; box-shadow:0 12px 30px rgba(0,43,92,.1); }
+    .shot img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s ease; }
+    .shot:hover img { transform:scale(1.06); }
+    .shot .ph { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#90a8c9; font-family:'IBM Plex Mono', monospace; font-size:.78rem; text-align:center; padding:1rem; }
+
+    .endcta { text-align:center; padding:3rem 1.5rem 4rem; }
+    .endcta .row { display:flex; gap:.8rem; justify-content:center; flex-wrap:wrap; margin-top:1.2rem; }
+    footer { text-align:center; padding:2rem 1rem; color:#8aa0bf; font-size:.85rem; background:#f0f2f5; }
+
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+    .reveal.in { opacity:1; transform:none; }
+    @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } .reveal{ opacity:1 !important; transform:none !important; } html{ scroll-behavior:auto; } }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a class="back" href="index.html"><span class="a">←</span> Back to portfolio</a>
+    <a class="btn primary" href="https://github.com/MaximeJLT/Dassault_UAV_Challenge" target="_blank" rel="noopener">View on GitHub ↗</a>
+  </div>
+
+  <header class="hero">
+    <span class="blob b1"></span><span class="blob b2"></span>
+    <div class="hero-inner">
+      <span class="eyebrow">Aerial autonomy · Dassault UAV Challenge 2026</span>
+      <h1>An autonomous drone that sees, decides and flies on its own</h1>
+      <p class="lede">My team built a complete UAV from scratch and made it fly a mission with no human at the controls — spotting a target, tracking it, and navigating to it in real time.</p>
+      <div class="award">🏆 Jury's Favorite Award — top 3 of 8 teams</div>
+      <div class="hero-cta">
+        <a class="btn primary" href="https://github.com/MaximeJLT/Dassault_UAV_Challenge" target="_blank" rel="noopener">View on GitHub ↗</a>
+        <a class="btn ghost" href="#how">How it works</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="block">
+      <h2 class="reveal">The goal</h2>
+      <p class="body reveal">The Dassault UAV Challenge asks student teams to build a drone that can carry out a mission autonomously. The hard part isn't flying — it's making the aircraft <strong>understand what it sees</strong> and <strong>decide what to do</strong> without anyone guiding it.</p>
+      <p class="body reveal">We chose the demanding route: rather than buy a ready-made platform, we built the entire aircraft ourselves and wrote the software brain that turns a camera feed into autonomous decisions.</p>
+    </section>
+
+    <section class="block" id="how">
+      <h2 class="reveal">How it works</h2>
+      <p class="body reveal">The drone runs a perception-to-action pipeline. Each stage hands off to the next, many times per second:</p>
+      <div class="pipeline reveal">
+        <div class="step"><div class="k">See</div><div class="v">Camera feed</div></div>
+        <div class="step"><div class="k">Detect</div><div class="v">YOLOv8</div></div>
+        <div class="step"><div class="k">Track</div><div class="v">ByteTrack</div></div>
+        <div class="step"><div class="k">Locate</div><div class="v">Pixel → GPS</div></div>
+        <div class="step"><div class="k">Act</div><div class="v">ArduPilot / MAVLink</div></div>
+      </div>
+      <div class="flow reveal"></div>
+      <div class="callout reveal">
+        <p style="margin:0"><strong>In plain terms:</strong> the camera streams images, an AI model spots the target in every frame, a tracker keeps it as the <em>same</em> target as it moves, the system turns its position on screen into real-world GPS coordinates, and the flight controller flies the mission accordingly — all driven by a small decision "brain" (a finite-state machine).</p>
+      </div>
+      <p class="body reveal">Before any real flight, the whole pipeline was validated in <strong>SITL simulation</strong> (software-in-the-loop), so the logic could be tested safely and repeatedly on the ground first.</p>
+    </section>
+
+    <section class="block">
+      <h2 class="reveal">My role</h2>
+      <p class="body reveal">I led the <strong>perception and navigation stack</strong>: the real-time detection and tracking, the pixel-to-GPS targeting, the autonomous mission logic on ArduPilot/MAVLink, and the simulation testing. In short, the part that makes the drone autonomous rather than remote-controlled.</p>
+    </section>
+
+    <section class="block">
+      <h2 class="reveal">In pictures</h2>
+      <div class="gallery">
+        <div class="shot reveal"><img src="uav_shot1.png" alt="UAV team" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="ph" style="display:none">uav_shot1.png — team &amp; aircraft</div></div>
+        <div class="shot reveal"><img src="uav_shot2.png" alt="Detection view" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="ph" style="display:none">uav_shot2.png — detection / tracking view</div></div>
+        <div class="shot reveal"><img src="uav_shot3.png" alt="Flight" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="ph" style="display:none">uav_shot3.png — flight / field</div></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2 class="reveal">What's next</h2>
+      <p class="body reveal">Because we built the airframe in-house, full onboard integration is the focus of the next campaign — moving the whole perception pipeline onto the aircraft for end-to-end autonomy in flight.</p>
+    </section>
+  </main>
+
+  <div class="endcta">
+    <p style="font-family:'IBM Plex Mono', monospace; color:var(--navy); font-size:1.05rem;">Want the technical details and the code?</p>
+    <div class="row">
+      <a class="btn primary" href="https://github.com/MaximeJLT/Dassault_UAV_Challenge" target="_blank" rel="noopener">View on GitHub ↗</a>
+      <a class="btn ghost" href="index.html">← Back to portfolio</a>
+    </div>
+  </div>
+
+  <footer>© 2026 Maxime Jolliot</footer>
+
+  <script>
+    const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target);} }), { threshold:0.14 });
+    document.querySelectorAll('.reveal').forEach((el,i)=>{ el.style.transitionDelay = rm?'0s':(Math.min(i%5,4)*0.06)+'s'; obs.observe(el); });
+  </script>
+</body>
+</html>
