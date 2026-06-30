@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Manrope',sans-serif}
+  html{scroll-behavior:smooth}
+  body{background:#f8f9fa;color:#111;font-size:17px;line-height:1.7;overflow-x:hidden}
+  ::selection{background:#0070f3;color:#fff}
+  @keyframes drift { 0%,100%{transform:translate(0,0)} 50%{transform:translate(30px,-24px)} }
+  @keyframes driftRev { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-30px,24px)} }
+  @keyframes slide { to { left:120%; } }
+</style>
+</helmet>
+
+<!-- TOPBAR -->
+<div style="position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:0.8rem 1.5rem;background:rgba(255,255,255,0.82);backdrop-filter:saturate(160%) blur(12px);-webkit-backdrop-filter:saturate(160%) blur(12px);border-bottom:1px solid #e3e8f0;">
+  <a href="#" style="font-family:'IBM Plex Mono',monospace;font-size:0.85rem;text-decoration:none;color:#0056b3;display:inline-flex;align-items:center;gap:0.45rem;">
+    <span style="display:inline-block;transition:transform 0.25s ease;">←</span> Back to portfolio
+  </a>
+  <a href="https://github.com/MaximeJLT/Dassault_UAV_Challenge" target="_blank" rel="noopener" style="font-family:'IBM Plex Mono',monospace;font-size:0.85rem;font-weight:600;text-decoration:none;padding:0.6rem 1.1rem;border-radius:8px;display:inline-flex;align-items:center;gap:0.5rem;background:#002b5c;color:#fff;box-shadow:0 8px 20px rgba(0,43,92,0.2);" style-hover="background:#00224a;transform:translateY(-2px);box-shadow:0 14px 30px rgba(0,43,92,0.3)">
+    View on GitHub ↗
+  </a>
+</div>
+
+<!-- HERO with video bg -->
+<header style="position:relative;overflow:hidden;padding:5.5rem 1.5rem 4.5rem;min-height:88vh;display:flex;align-items:center;justify-content:center;background:radial-gradient(1000px 520px at 80% 10%, #eaf1fb 0%, #f1f4f8 55%, #eef2f7 100%);">
+  <!-- video -->
+  <video autoplay muted loop playsinline preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+    <source src="hero.mp4" type="video/mp4">
+  </video>
+  <!-- white-veil overlay so dark text stays legible against the video -->
+  <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(180deg, rgba(248,249,250,0.78) 0%, rgba(241,244,248,0.72) 50%, rgba(238,242,247,0.88) 100%);"></div>
+  <div style="position:absolute;inset:0;z-index:1;background:radial-gradient(800px 500px at 80% 10%, rgba(234,241,251,0.55) 0%, transparent 70%);"></div>
+  <!-- decorative blobs -->
+  <span style="position:absolute;border-radius:50%;filter:blur(60px);opacity:0.5;z-index:2;width:380px;height:380px;background:radial-gradient(circle,#bcd6f7,transparent 70%);top:-80px;right:-60px;animation:drift 16s ease-in-out infinite;"></span>
+  <span style="position:absolute;border-radius:50%;filter:blur(60px);opacity:0.5;z-index:2;width:300px;height:300px;background:radial-gradient(circle,#c9f3fb,transparent 70%);bottom:-120px;left:-40px;animation:driftRev 20s ease-in-out infinite;"></span>
+
+  <div style="position:relative;z-index:3;max-width:900px;margin:auto;">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:0.8rem;letter-spacing:0.28em;text-transform:uppercase;color:#0056b3;">
+      <span style="color:#00e1ff;">◇</span> Aerial autonomy · Dassault UAV Challenge 2026
+    </span>
+    <h1 style="font-family:'IBM Plex Mono',monospace;font-size:clamp(2.1rem,5vw,3.3rem);color:#002b5c;margin:0.8rem 0 1rem;line-height:1.1;">
+      An autonomous drone that sees, decides and flies on its own
+    </h1>
+    <p style="font-size:1.25rem;color:#33415a;max-width:680px;">
+      My team built a complete UAV from scratch and made it fly a mission with no human at the controls — spotting a target, tracking it, and navigating to it in real time.
+    </p>
+    <div style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:1.6rem;font-family:'IBM Plex Mono',monospace;font-size:0.82rem;color:#002b5c;background:#fff;border:1px solid #ffe2a8;box-shadow:0 6px 18px rgba(0,43,92,0.08);padding:0.5rem 0.9rem;border-radius:999px;">
+      🏆 Jury's Favorite Award — top 3 of 8 teams
+    </div>
+    <div style="margin-top:2rem;display:flex;gap:0.8rem;flex-wrap:wrap;">
+      <a href="https://github.com/MaximeJLT/Dassault_UAV_Challenge" target="_blank" rel="noopener" style="font-family:'IBM Plex Mono',monospace;font-size:0.85rem;font-weight:600;text-decoration:none;padding:0.6rem 1.1rem;border-radius:8px;display:inline-flex;align-items:center;gap:0.5rem;background:#002b5c;color:#fff;box-shadow:0 8px 20px rgba(0,43,92,0.2);transition:all 0.25s ease;" style-hover="background:#00224a;transform:translateY(-2px);box-shadow:0 14px 30px rgba(0,43,92,0.3)">View on GitHub ↗</a>
+      <a href="#how" style="font-family:'IBM Plex Mono',monospace;font-size:0.85rem;font-weight:600;text-decoration:none;padding:0.6rem 1.1rem;border-radius:8px;display:inline-flex;align-items:center;gap:0.5rem;background:#fff;color:#002b5c;border:1.5px solid #cfe0f7;transition:all 0.25s ease;" style-hover="background:#eef4ff">How it works</a>
+    </div>
+  </div>
+</header>
+
+<main style="max-width:900px;margin:auto;padding:1rem 1.5rem 2rem;">
+
+  <!-- THE GOAL -->
+  <section style="padding:3rem 0;border-bottom:1px solid #eef1f6;">
+    <h2 style="font-family:'IBM Plex Mono',monospace;font-size:1.6rem;color:#004aad;margin-bottom:1rem;">The goal</h2>
+    <p style="font-size:1.08rem;color:#2b3651;margin-bottom:1rem;">The Dassault UAV Challenge asks student teams to build a drone that can carry out a mission autonomously. The hard part isn't flying — it's making the aircraft <strong style="color:#002b5c;">understand what it sees</strong> and <strong style="color:#002b5c;">decide what to do</strong> without anyone guiding it.</p>
+    <p style="font-size:1.08rem;color:#2b3651;">We chose the demanding route: rather than buy a ready-made platform, we built the entire aircraft ourselves and wrote the software brain that turns a camera feed into autonomous decisions.</p>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" style="padding:3rem 0;border-bottom:1px solid #eef1f6;">
+    <h2 style="font-family:'IBM Plex Mono',monospace;font-size:1.6rem;color:#004aad;margin-bottom:1rem;">How it works</h2>
+    <p style="font-size:1.08rem;color:#2b3651;margin-bottom:1rem;">The drone runs a perception-to-action pipeline. Each stage hands off to the next, many times per second:</p>
+    <div style="position:relative;display:flex;flex-wrap:wrap;gap:0.7rem;align-items:stretch;margin:1.6rem 0 0.6rem;">
+      <sc-for list="{{ pipeline }}" as="p" hint-placeholder-count="5">
+        <div style="flex:1;min-width:130px;background:#fff;border:1px solid #e3e9f3;border-radius:12px;padding:1rem;text-align:center;box-shadow:0 8px 22px rgba(0,43,92,0.08);position:relative;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:#0070f3;">{{ p.k }}</div>
+          <div style="font-weight:700;color:#002b5c;margin-top:0.25rem;font-size:0.98rem;">{{ p.v }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="height:3px;background:rgba(0,112,243,0.15);border-radius:3px;position:relative;overflow:hidden;margin-top:0.4rem;" style-after="content:'';position:absolute;top:0;left:-30%;width:30%;height:100%;background:linear-gradient(90deg,transparent,#00e1ff,transparent);animation:slide 2.4s linear infinite"></div>
+    <div style="background:#fff;border-left:4px solid #0070f3;border-radius:10px;padding:1.1rem 1.3rem;box-shadow:0 8px 24px rgba(0,43,92,0.07);margin:1.2rem 0;">
+      <p style="margin:0;font-size:1.08rem;color:#2b3651;"><strong style="color:#002b5c;">In plain terms:</strong> the camera streams images, an AI model spots the target in every frame, a tracker keeps it as the <em>same</em> target as it moves, the system turns its position on screen into real-world GPS coordinates, and the flight controller flies the mission accordingly — all driven by a small decision "brain" (a finite-state machine).</p>
+    </div>
+    <p style="font-size:1.08rem;color:#2b3651;">Before any real flight, the whole pipeline was validated in <strong style="color:#002b5c;">SITL simulation</strong> (software-in-the-loop), so the logic could be tested safely and repeatedly on the ground first.</p>
+  </section>
+
+  <!-- MY ROLE -->
+  <section style="padding:3rem 0;border-bottom:1px solid #eef1f6;">
+    <h2 style="font-family:'IBM Plex Mono',monospace;font-size:1.6rem;color:#004aad;margin-bottom:1rem;">My role</h2>
+    <p style="font-size:1.08rem;color:#2b3651;">I led the <strong style="color:#002b5c;">perception and navigation stack</strong>: the real-time detection and tracking, the pixel-to-GPS targeting, the autonomous mission logic on ArduPilot/MAVLink, and the simulation testing. In short, the part that makes the drone autonomous rather than remote-controlled.</p>
+  </section>
+
+</main>
+
+<!-- 3D EXPLODE — full-width section, integrated with the page's light DA -->
+<section id="explode-wrap" style="position:relative;width:100%;background:linear-gradient(180deg,#f1f4f8 0%, #eaf1fb 100%);border-top:1px solid #eef1f6;border-bottom:1px solid #eef1f6;">
+  <div style="max-width:900px;margin:auto;padding:3.5rem 1.5rem 1rem;">
+    <h2 style="font-family:'IBM Plex Mono',monospace;font-size:1.6rem;color:#004aad;margin-bottom:0.8rem;">The aircraft, piece by piece</h2>
+    <p style="font-size:1.08rem;color:#2b3651;margin-bottom:0;">A quadplane VTOL we hand-built from foam and composite. Scroll to disassemble it — every subsystem flies out, one by one.</p>
+  </div>
+
+  <!-- scroll container -->
+  <div id="explode" style="position:relative;width:100%;height:560vh;">
+    <div style="position:sticky;top:0;width:100%;height:100vh;overflow:hidden;">
+
+      <!-- 3D canvas mount -->
+      <div ref="{{ canvasRef }}" style="position:absolute;inset:0;width:100%;height:100%;"></div>
+
+      <!-- subtle grid overlay -->
+      <div style="position:absolute;inset:0;pointer-events:none;background:
+          linear-gradient(rgba(0,86,179,0.05) 1px, transparent 1px) 0 0/60px 60px,
+          linear-gradient(90deg, rgba(0,86,179,0.05) 1px, transparent 1px) 0 0/60px 60px;
+          mask-image:radial-gradient(ellipse at center, black 40%, transparent 85%);
+          -webkit-mask-image:radial-gradient(ellipse at center, black 40%, transparent 85%);"></div>
+
+      <!-- step list (left) -->
+      <div style="position:absolute;left:1.5rem;top:50%;transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;gap:0.65rem;font-family:'IBM Plex Mono',monospace;font-size:0.65rem;letter-spacing:0.18em;color:rgba(0,43,92,0.45);max-width:170px;">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="11">
+          <div style="display:flex;align-items:center;gap:0.6rem;transition:color 0.4s, opacity 0.4s;" data-step="{{ $index }}">
+            <span style="width:18px;height:1px;background:currentColor;flex-shrink:0;"></span>
+            <span style="white-space:nowrap;">{{ s.label }}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- caption (bottom center) -->
+      <div style="position:absolute;bottom:6%;left:50%;transform:translateX(-50%);z-index:5;text-align:center;max-width:620px;padding:0 1.5rem;">
+        <div ref="{{ capTitleRef }}" style="font-family:'IBM Plex Mono',monospace;font-size:0.74rem;letter-spacing:0.3em;color:#0070f3;text-transform:uppercase;margin-bottom:0.6rem;">Assembled</div>
+        <div ref="{{ capBodyRef }}" style="font-family:'Manrope',sans-serif;font-size:1rem;color:#2b3651;line-height:1.55;">Our hand-built quadplane VTOL. Scroll to take it apart.</div>
+      </div>
+
+      <!-- progress bar (top) -->
+      <div style="position:absolute;top:0;left:0;width:100%;height:2px;background:rgba(0,43,92,0.08);z-index:5;">
+        <div ref="{{ barRef }}" style="height:100%;width:0%;background:linear-gradient(90deg,#0070f3,#00e1ff);box-shadow:0 0 10px #00e1ff;transition:width 0.1s linear;"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<main style="max-width:900px;margin:auto;padding:1rem 1.5rem 2rem;">
+
+  <!-- IN PICTURES -->
+  <section style="padding:3rem 0;border-bottom:1px solid #eef1f6;">
+    <h2 style="font-family:'IBM Plex Mono',monospace;font-size:1.6rem;color:#004aad;margin-bottom:1rem;">In pictures</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1.2rem;">
+      <sc-for list="{{ shots }}" as="sh" hint-placeholder-count="3">
+        <div style="position:relative;aspect-ratio:4/3;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#e9eff7,#dbe6f5);border:1px solid #e3e9f3;box-shadow:0 12px 30px rgba(0,43,92,0.1);">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#90a8c9;font-family:'IBM Plex Mono',monospace;font-size:0.78rem;text-align:center;padding:1rem;">{{ sh }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- WHAT'S NEXT -->
+  <section style="padding:3rem 0;">
+    <h2 style="font-family:'IBM Plex Mono',monospace;font-size:1.6rem;color:#004aad;margin-bottom:1rem;">What's next</h2>
+    <p style="font-size:1.08rem;color:#2b3651;">Because we built the airframe in-house, full onboard integration is the focus of the next campaign — moving the whole perception pipeline onto the aircraft for end-to-end autonomy in flight.</p>
+  </section>
+
+</main>
+
+<!-- END CTA -->
+<div style="text-align:center;padding:3rem 1.5rem 4rem;">
+  <p style="font-family:'IBM Plex Mono',monospace;color:#002b5c;font-size:1.05rem;">Want the technical details and the code?</p>
+  <div style="display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap;margin-top:1.2rem;">
+    <a href="https://github.com/MaximeJLT/Dassault_UAV_Challenge" target="_blank" rel="noopener" style="font-family:'IBM Plex Mono',monospace;font-size:0.85rem;font-weight:600;text-decoration:none;padding:0.6rem 1.1rem;border-radius:8px;display:inline-flex;align-items:center;gap:0.5rem;background:#002b5c;color:#fff;box-shadow:0 8px 20px rgba(0,43,92,0.2);">View on GitHub ↗</a>
+    <a href="#" style="font-family:'IBM Plex Mono',monospace;font-size:0.85rem;font-weight:600;text-decoration:none;padding:0.6rem 1.1rem;border-radius:8px;display:inline-flex;align-items:center;gap:0.5rem;background:#fff;color:#002b5c;border:1.5px solid #cfe0f7;">← Back to portfolio</a>
+  </div>
+</div>
+
+<footer style="text-align:center;padding:2rem 1rem;color:#8aa0bf;font-size:0.85rem;background:#f0f2f5;">© 2026 Maxime Jolliot</footer>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this.canvasRef = React.createRef();
+    this.capTitleRef = React.createRef();
+    this.capBodyRef = React.createRef();
+    this.barRef = React.createRef();
+    this.progress = 0;
+
+    this.pipeline = [
+      { k:'See', v:'Camera feed' },
+      { k:'Detect', v:'YOLOv8' },
+      { k:'Track', v:'ByteTrack' },
+      { k:'Locate', v:'Pixel → GPS' },
+      { k:'Act', v:'ArduPilot / MAVLink' }
+    ];
+    this.shots = [
+      'uav_shot1.png — team & aircraft',
+      'uav_shot2.png — detection / tracking view',
+      'uav_shot3.png — flight / field'
+    ];
+    this.steps = [
+      { label:'ASSEMBLED', title:'Assembled airframe', body:'Our hand-built foam quadplane VTOL — bullet fuselage, high wing, twin carbon booms with four lift motors, rear pusher, cruciform tail. Scroll on.' },
+      { label:'FUSELAGE', title:'Foam fuselage', body:'Bullet-shaped fuselage hand-cut from foam, with a slim aft boom carrying the tail. Houses the entire avionics bay.' },
+      { label:'CRUCIFORM TAIL', title:'Cruciform tail', body:'Conventional vertical fin + horizontal stabilizer at the end of the aft boom. Elevator and rudder for pitch and yaw.' },
+      { label:'HIGH WING', title:'High rectangular wing', body:'Large foam wing fixed atop the fuselage, with ailerons on the trailing edge and small winglets at the tips.' },
+      { label:'CARBON BOOMS', title:'2× carbon booms', body:'Two carbon-fiber tubes thread through the wing parallel to the fuselage. Each one carries two VTOL motors.' },
+      { label:'VTOL ×4', title:'4× VTOL lift motors', body:'Four brushless outrunners with red 3-blade props for vertical takeoff and landing. They idle during cruise.' },
+      { label:'PUSHER', title:'Pusher propulsion motor', body:'A larger outrunner at the rear of the fuselage drives a 2-blade folding prop — fixed-wing thrust for cruise.' },
+      { label:'PITOT + CAMERA', title:'Pitot tube + Caddx FPV camera', body:'Forward-facing Pitot for true airspeed and a Caddx analog camera under the nose feeding the video transmitter.' },
+      { label:'FC + ESC', title:'SpeedyBee F405-WING + ESCs', body:'SpeedyBee F405-WING flight controller running ArduPlane (Q_PLANE), five ESCs driving each motor independently.' },
+      { label:'GPS · VTX · RX', title:'GPS · VTX · RX / Telemetry', body:'GPS dome on top for outdoor autonomy, video transmitter + RC receiver + telemetry radio with their antennas.' },
+      { label:'BATTERY', title:'LiPo battery pack', body:'High-discharge LiPo packs in the forward bay power every motor and the avionics. Centered on the CG for balance.' }
+    ];
+  }
+
+  componentDidMount(){
+    window.__UAV = this;
+    try { this.initThree(); } catch(e){ console.error('initThree failed:', e); }
+    this.onScroll = () => {
+      const el = document.getElementById('explode');
+      if(!el) return;
+      const r = el.getBoundingClientRect();
+      const total = el.offsetHeight - window.innerHeight;
+      const p = Math.max(0, Math.min(1, -r.top / total));
+      this.progress = p;
+      this.updateCaption(p);
+      if(this.barRef.current) this.barRef.current.style.width = (p*100)+'%';
+    };
+    window.addEventListener('scroll', this.onScroll, { passive:true, capture:true });
+    document.addEventListener('scroll', this.onScroll, { passive:true, capture:true });
+    window.addEventListener('resize', this.onResize = ()=>this.handleResize());
+    this._poll = setInterval(()=>this.onScroll(), 120);
+    this.onScroll();
+  }
+
+  componentWillUnmount(){
+    window.removeEventListener('scroll', this.onScroll, true);
+    document.removeEventListener('scroll', this.onScroll, true);
+    window.removeEventListener('resize', this.onResize);
+    clearInterval(this._poll);
+    cancelAnimationFrame(this._raf);
+    if(this.renderer) this.renderer.dispose();
+  }
+
+  updateCaption(p){
+    const n = this.steps.length;
+    const idx = Math.min(n-1, Math.floor(p * n * 0.9999));
+    const s = this.steps[idx];
+    if(this.capTitleRef.current) this.capTitleRef.current.textContent = s.title;
+    if(this.capBodyRef.current) this.capBodyRef.current.textContent = s.body;
+    document.querySelectorAll('[data-step]').forEach(el=>{
+      const i = +el.dataset.step;
+      el.style.color = (i===idx) ? '#0070f3' : 'rgba(0,43,92,0.4)';
+      el.style.opacity = (i===idx) ? '1' : '0.7';
+    });
+  }
+
+  handleResize(){
+    if(!this.renderer || !this.canvasRef.current) return;
+    const w = this.canvasRef.current.clientWidth;
+    const h = this.canvasRef.current.clientHeight;
+    this.renderer.setSize(w, h);
+    this.camera.aspect = w/h;
+    this.camera.updateProjectionMatrix();
+  }
+
+  initThree(){
+    const THREE = window.THREE;
+    const mount = this.canvasRef.current;
+    if(!mount || !THREE) return;
+    const w = mount.clientWidth, h = mount.clientHeight;
+
+    const scene = new THREE.Scene();
+    scene.background = null;
+
+    const camera = new THREE.PerspectiveCamera(34, w/h, 0.1, 200);
+    this.camera = camera;
+
+    const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(w, h);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.15;
+    mount.appendChild(renderer.domElement);
+    this.renderer = renderer;
+
+    // ===== LIGHTING (bright daylight for the white airframe) =====
+    const hemi = new THREE.HemisphereLight(0xffffff, 0xc7d6e8, 0.85);
+    scene.add(hemi);
+    const key = new THREE.DirectionalLight(0xffffff, 1.4);
+    key.position.set(6, 10, 5); key.castShadow = true;
+    key.shadow.mapSize.set(2048, 2048);
+    key.shadow.camera.left=-12; key.shadow.camera.right=12;
+    key.shadow.camera.top=12; key.shadow.camera.bottom=-12;
+    key.shadow.camera.near=1; key.shadow.camera.far=40;
+    key.shadow.bias = -0.0008;
+    scene.add(key);
+    const rim = new THREE.DirectionalLight(0x9fc5ff, 0.55);
+    rim.position.set(-6, 4, -6); scene.add(rim);
+    const fill = new THREE.DirectionalLight(0xffffff, 0.35);
+    fill.position.set(0, -2, 6); scene.add(fill);
+
+    // ===== MATERIALS =====
+    const matFoam   = new THREE.MeshStandardMaterial({ color:0xf6f7f9, roughness:0.88, metalness:0.02 });
+    const matFoamHi = new THREE.MeshStandardMaterial({ color:0xfafbfc, roughness:0.85, metalness:0.03 });
+    const matCarbon = new THREE.MeshStandardMaterial({ color:0x1a1d23, roughness:0.35, metalness:0.7 });
+    const matMotorBell = new THREE.MeshStandardMaterial({ color:0xb88a3a, roughness:0.32, metalness:0.88 });
+    const matMotorBase = new THREE.MeshStandardMaterial({ color:0xeaeaea, roughness:0.4, metalness:0.5 });
+    const matRedProp = new THREE.MeshStandardMaterial({ color:0xc62a1f, roughness:0.5, metalness:0.25 });
+    const matBlackProp = new THREE.MeshStandardMaterial({ color:0x1a1c22, roughness:0.55, metalness:0.2 });
+    const matSteel  = new THREE.MeshStandardMaterial({ color:0xb0b3b8, roughness:0.3, metalness:0.9 });
+    const matPCB    = new THREE.MeshStandardMaterial({ color:0x0e1112, roughness:0.7, metalness:0.1 });
+    const matESC    = new THREE.MeshStandardMaterial({ color:0x14171b, roughness:0.55, metalness:0.3 });
+    const matLipo   = new THREE.MeshStandardMaterial({ color:0xc7c7cc, roughness:0.45, metalness:0.55 });
+    const matLipoLabel = new THREE.MeshStandardMaterial({ color:0xf6b400, roughness:0.6 });
+    const matXT60   = new THREE.MeshStandardMaterial({ color:0xe8a93a, roughness:0.5, metalness:0.4 });
+    const matGPS    = new THREE.MeshStandardMaterial({ color:0xf2f2f2, roughness:0.4 });
+    const matCam    = new THREE.MeshStandardMaterial({ color:0x0a0a0a, roughness:0.3, metalness:0.4 });
+    const matLens   = new THREE.MeshStandardMaterial({ color:0x0a0a0a, roughness:0.05, metalness:0.9, emissive:0x113344, emissiveIntensity:0.45 });
+
+    const root = new THREE.Group();
+    scene.add(root);
+    this.parts = [];
+
+    const addPart = (mesh, home, exploded, delay=0, span=0.18) => {
+      mesh.userData = { home: home.clone(), exploded: exploded.clone(), delay, span };
+      mesh.position.copy(home);
+      mesh.traverse(o => { if(o.isMesh){ o.castShadow = true; o.receiveShadow = true; } });
+      root.add(mesh);
+      this.parts.push(mesh);
+      return mesh;
+    };
+
+    // Coord: +x = nose, +y = up, +z = right wing
+
+    // ===== FUSELAGE (forward bay) — separate from aft boom + tail =====
+    const fuselage = new THREE.Group();
+    const bay = new THREE.Mesh(new THREE.SphereGeometry(0.40, 36, 24), matFoam);
+    bay.scale.set(2.4, 0.85, 1.0);
+    bay.position.set(0.20, 0, 0);
+    fuselage.add(bay);
+    // small dorsal seam
+    const seam = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.005, 0.02), new THREE.MeshStandardMaterial({color:0xc8cad0, roughness:0.85}));
+    seam.position.set(0.20, 0.33, 0); fuselage.add(seam);
+    addPart(fuselage, new THREE.Vector3(0,0,0), new THREE.Vector3(0,-1.6,0), 0.06, 0.14);
+
+    // ===== AFT BOOM + CRUCIFORM TAIL =====
+    const tail = new THREE.Group();
+    // aft boom: from -0.85 to -2.5 in x
+    const aftBoom = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.05, 1.65, 18), matFoam);
+    aftBoom.rotation.z = Math.PI/2; aftBoom.position.set(-1.68, 0.05, 0);
+    tail.add(aftBoom);
+    // transition fairing (between bay and aft boom)
+    const trans = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.28, 0.4, 18), matFoam);
+    trans.rotation.z = Math.PI/2; trans.position.set(-0.93, 0.02, 0);
+    tail.add(trans);
+    // horizontal stab
+    const hStabShape = new THREE.Shape();
+    hStabShape.moveTo(-0.18,-0.75); hStabShape.lineTo(0.22,-0.55);
+    hStabShape.lineTo(0.22,0.55);   hStabShape.lineTo(-0.18,0.75);
+    hStabShape.closePath();
+    const hStabGeo = new THREE.ExtrudeGeometry(hStabShape, { depth:0.04, bevelEnabled:true, bevelThickness:0.012, bevelSize:0.012, bevelSegments:2 });
+    hStabGeo.translate(0,0,-0.02);
+    const hStab = new THREE.Mesh(hStabGeo, matFoam);
+    hStab.rotation.x = Math.PI/2;
+    hStab.position.set(-2.55, 0.07, 0);
+    tail.add(hStab);
+    // vertical fin
+    const vFinShape = new THREE.Shape();
+    vFinShape.moveTo(-0.22,0); vFinShape.lineTo(0.30,0);
+    vFinShape.lineTo(0.16,0.7); vFinShape.lineTo(-0.05,0.7);
+    vFinShape.closePath();
+    const vFinGeo = new THREE.ExtrudeGeometry(vFinShape, { depth:0.035, bevelEnabled:true, bevelThickness:0.01, bevelSize:0.01, bevelSegments:2 });
+    vFinGeo.translate(0,0,-0.017);
+    const vFin = new THREE.Mesh(vFinGeo, matFoam);
+    vFin.position.set(-2.55, 0.09, 0);
+    tail.add(vFin);
+    addPart(tail, new THREE.Vector3(0,0,0), new THREE.Vector3(-2.6, 1.6, 0), 0.13, 0.16);
+
+    // ===== HIGH WING (atop fuselage) =====
+    const wing = new THREE.Group();
+    const halfSpan = 3.1, chord = 0.78;
+    const wingGeo = new THREE.ExtrudeGeometry(
+      (()=>{ const s=new THREE.Shape();
+        s.moveTo(-chord/2,-halfSpan); s.lineTo(chord/2,-halfSpan);
+        s.lineTo(chord/2,halfSpan);   s.lineTo(-chord/2,halfSpan);
+        s.closePath(); return s; })(),
+      { depth:0.14, bevelEnabled:true, bevelThickness:0.05, bevelSize:0.06, bevelSegments:3 }
+    );
+    wingGeo.translate(0,0,-0.07);
+    const wingMesh = new THREE.Mesh(wingGeo, matFoam);
+    wingMesh.rotation.x = Math.PI/2;
+    wing.add(wingMesh);
+    // ailerons (faint trailing-edge cut lines)
+    [1,-1].forEach(side=>{
+      const ail = new THREE.Mesh(new THREE.BoxGeometry(0.025, 0.005, 1.3), new THREE.MeshStandardMaterial({color:0xc0c2c6, roughness:0.85}));
+      ail.position.set(-chord/2 + 0.06, 0.082, side*1.9); wing.add(ail);
+    });
+    // winglets
+    [1,-1].forEach(side=>{
+      const wl = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.34, 0.04), matFoam);
+      wl.position.set(-0.05, 0.20, side*halfSpan);
+      wing.add(wl);
+    });
+    addPart(wing, new THREE.Vector3(0.15, 0.43, 0), new THREE.Vector3(0.15, 2.6, 0), 0.20, 0.16);
+
+    // ===== TWIN CARBON BOOMS — explode straight out laterally =====
+    const boomLen = 2.7;
+    [1,-1].forEach((side, i) => {
+      const boomGroup = new THREE.Group();
+      const tube = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, boomLen, 14), matCarbon);
+      tube.rotation.z = Math.PI/2;
+      boomGroup.add(tube);
+      // foam pad at wing pass-through
+      const pad = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.12, 0.1), matFoamHi);
+      pad.position.set(0, 0.04, 0); boomGroup.add(pad);
+      addPart(boomGroup,
+        new THREE.Vector3(0.0, 0.36, side*1.1),
+        new THREE.Vector3(0.0, 0.36, side*3.6),  // straight out along Z, same height
+        0.32, 0.16);
+    });
+
+    // ===== 4× VTOL MOTORS — explode UP in 4 distinct quadrants, vertically clear of everything =====
+    const vtolHomes = [
+      { p:[ boomLen/2,  0.45,  1.1], exp:[ boomLen/2 + 0.4,  3.0,  1.1 + 1.6] },  // front-right
+      { p:[-boomLen/2,  0.45,  1.1], exp:[-boomLen/2 - 0.4,  3.0,  1.1 + 1.6] },  // rear-right
+      { p:[ boomLen/2,  0.45, -1.1], exp:[ boomLen/2 + 0.4,  3.0, -1.1 - 1.6] },  // front-left
+      { p:[-boomLen/2,  0.45, -1.1], exp:[-boomLen/2 - 0.4,  3.0, -1.1 - 1.6] }   // rear-left
+    ];
+    vtolHomes.forEach((v, i) => {
+      const motorGroup = new THREE.Group();
+      const plate = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.04, 0.16), matFoamHi);
+      motorGroup.add(plate);
+      const bell  = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 0.14, 22), matMotorBell);
+      bell.position.y = 0.10; motorGroup.add(bell);
+      const cap   = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.11, 0.03, 22), matMotorBase);
+      cap.position.y = 0.185; motorGroup.add(cap);
+      const hubBase = new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.03,0.04,12), matSteel);
+      hubBase.position.y = 0.22; motorGroup.add(hubBase);
+      // 3-blade red prop
+      const prop = new THREE.Group();
+      for(let b=0;b<3;b++){
+        const bladeGeo = new THREE.BoxGeometry(0.95, 0.012, 0.10);
+        bladeGeo.translate(0.46, 0, 0);
+        const blade = new THREE.Mesh(bladeGeo, matRedProp);
+        blade.rotation.y = (b/3)*Math.PI*2;
+        blade.position.y = 0.255;
+        prop.add(blade);
+      }
+      const propHub = new THREE.Mesh(new THREE.CylinderGeometry(0.035,0.035,0.025,12), matRedProp);
+      propHub.position.y = 0.265; prop.add(propHub);
+      motorGroup.add(prop);
+      motorGroup.userData.prop = prop;
+
+      addPart(motorGroup,
+        new THREE.Vector3(...v.p),
+        new THREE.Vector3(...v.exp),
+        0.42 + i*0.015, 0.18);
+    });
+
+    // ===== PUSHER MOTOR — explode straight back =====
+    const pusher = new THREE.Group();
+    const pBell = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.17, 0.20, 24), matMotorBell);
+    pBell.rotation.z = Math.PI/2; pusher.add(pBell);
+    const pBase = new THREE.Mesh(new THREE.CylinderGeometry(0.10, 0.15, 0.07, 24), matMotorBase);
+    pBase.rotation.z = Math.PI/2; pBase.position.x = 0.12; pusher.add(pBase);
+    // silver bullet spinner
+    const spinner = new THREE.Mesh(new THREE.ConeGeometry(0.10, 0.20, 22), matSteel);
+    spinner.rotation.z = -Math.PI/2; spinner.position.x = -0.23; pusher.add(spinner);
+    // 2-blade folding prop (in YZ plane → spins around x)
+    const pProp = new THREE.Group();
+    for(let b=0;b<2;b++){
+      const bladeGeo = new THREE.BoxGeometry(0.025, 1.0, 0.13);
+      bladeGeo.translate(0, 0.5, 0);
+      const blade = new THREE.Mesh(bladeGeo, matBlackProp);
+      blade.rotation.x = b*Math.PI;
+      pProp.add(blade);
+    }
+    const pPropHub = new THREE.Mesh(new THREE.CylinderGeometry(0.05,0.05,0.06,14), matBlackProp);
+    pPropHub.rotation.z = Math.PI/2; pProp.add(pPropHub);
+    pProp.position.x = -0.14;
+    pusher.add(pProp);
+    pusher.userData.prop = pProp;
+    addPart(pusher, new THREE.Vector3(-1.38, 0.08, 0), new THREE.Vector3(-5.0, 0.08, 0), 0.50, 0.16).userData.isPusher = true;
+
+    // ===== PITOT TUBE — explode forward (along nose direction) =====
+    const pitot = new THREE.Group();
+    const pStem = new THREE.Mesh(new THREE.CylinderGeometry(0.012,0.012,0.20,10), matSteel);
+    pStem.rotation.z = Math.PI/2; pStem.position.x = 0.08; pitot.add(pStem);
+    const pBlock = new THREE.Mesh(new THREE.BoxGeometry(0.07,0.07,0.07), matFoamHi);
+    pBlock.position.x = -0.05; pitot.add(pBlock);
+    addPart(pitot, new THREE.Vector3(1.62, -0.05, 0), new THREE.Vector3(4.0, -0.05, 0), 0.62, 0.14);
+
+    // ===== CADDX FPV CAMERA — explode forward-down-left =====
+    const cam = new THREE.Group();
+    const camBody = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.14, 0.16), matCam);
+    cam.add(camBody);
+    const lens = new THREE.Mesh(new THREE.CylinderGeometry(0.05,0.055,0.07,16), matLens);
+    lens.rotation.z = Math.PI/2; lens.position.x = 0.10; cam.add(lens);
+    addPart(cam, new THREE.Vector3(1.20, -0.30, 0), new THREE.Vector3(2.8, -1.6, -1.6), 0.66, 0.14);
+
+    // ===== SpeedyBee F405-WING FC — pop straight UP from bay =====
+    const fc = new THREE.Group();
+    const pcb = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.04, 0.30), matPCB);
+    fc.add(pcb);
+    const chip = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.022, 0.14), new THREE.MeshStandardMaterial({color:0x0a0a0a, roughness:0.7}));
+    chip.position.y = 0.033; fc.add(chip);
+    for(let i=0;i<3;i++){
+      const led = new THREE.Mesh(new THREE.BoxGeometry(0.022,0.012,0.022), new THREE.MeshStandardMaterial({color:0x00ff88, emissive:0x00ff88, emissiveIntensity:1.4}));
+      led.position.set(-0.14 + i*0.05, 0.028, 0.12); fc.add(led);
+    }
+    [[1,1],[1,-1],[-1,1],[-1,-1]].forEach(([sx,sz])=>{
+      const sof = new THREE.Mesh(new THREE.CylinderGeometry(0.018,0.018,0.06,8), matMotorBell);
+      sof.position.set(sx*0.18, 0, sz*0.12); fc.add(sof);
+    });
+    addPart(fc, new THREE.Vector3(0.05, 0.10, 0), new THREE.Vector3(0.05, 2.6, -1.0), 0.74, 0.14);
+
+    // ===== ESCs (stack) — pop UP behind FC =====
+    const escStack = new THREE.Group();
+    for(let i=0;i<5;i++){
+      const esc = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.045, 0.16), matESC);
+      esc.position.y = i*0.055;
+      escStack.add(esc);
+    }
+    const xt = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.09, 0.07), matXT60);
+    xt.position.set(0.22, 0.12, 0); escStack.add(xt);
+    addPart(escStack, new THREE.Vector3(-0.40, 0.05, 0.05), new THREE.Vector3(-0.40, 2.6, 1.0), 0.78, 0.14);
+
+    // ===== GPS dome — straight up =====
+    const gps = new THREE.Group();
+    const gpsBase = new THREE.Mesh(new THREE.CylinderGeometry(0.13,0.13,0.025,20), matGPS);
+    gps.add(gpsBase);
+    const gpsDome = new THREE.Mesh(new THREE.SphereGeometry(0.11,18,12, 0, Math.PI*2, 0, Math.PI/2), matGPS);
+    gpsDome.position.y = 0.012; gps.add(gpsDome);
+    addPart(gps, new THREE.Vector3(0.50, 0.36, 0), new THREE.Vector3(0.50, 3.6, 0), 0.82, 0.14);
+
+    // ===== VTX (video transmitter) with antenna — up and out to the right-rear =====
+    const vtx = new THREE.Group();
+    const vtxBody = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.06, 0.14), matESC);
+    vtx.add(vtxBody);
+    const vtxFin = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.025, 0.12), matMotorBell);
+    vtxFin.position.y = 0.04; vtx.add(vtxFin);
+    const antMount = new THREE.Mesh(new THREE.CylinderGeometry(0.012,0.012,0.24,8), matCarbon);
+    antMount.position.set(0.05, 0.17, 0); vtx.add(antMount);
+    const antTop = new THREE.Mesh(new THREE.SphereGeometry(0.025,10,8), matESC);
+    antTop.position.set(0.05, 0.30, 0); vtx.add(antTop);
+    addPart(vtx, new THREE.Vector3(-0.55, 0.10, 0.10), new THREE.Vector3(-2.0, 2.6, 2.4), 0.86, 0.14);
+
+    // ===== RX + telemetry — up-left =====
+    const radios = new THREE.Group();
+    const rx = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.04, 0.10), matESC);
+    rx.position.x = -0.10; radios.add(rx);
+    const ant1 = new THREE.Mesh(new THREE.CylinderGeometry(0.010,0.010,0.26,8), matCarbon);
+    ant1.position.set(-0.10, 0.15, 0.04); radios.add(ant1);
+    const tlm = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.05, 0.12), new THREE.MeshStandardMaterial({color:0x2a1f1a, roughness:0.7, metalness:0.2}));
+    tlm.position.x = 0.10; radios.add(tlm);
+    const ant2 = new THREE.Mesh(new THREE.CylinderGeometry(0.010,0.010,0.26,8), matCarbon);
+    ant2.position.set(0.10, 0.16, 0.04); radios.add(ant2);
+    addPart(radios, new THREE.Vector3(-0.85, 0.10, -0.10), new THREE.Vector3(-2.0, 2.6, -2.4), 0.86, 0.14);
+
+    // ===== LiPo battery pack — drop down =====
+    const battery = new THREE.Group();
+    const cell = new THREE.Mesh(new THREE.BoxGeometry(0.85, 0.18, 0.30), matLipo);
+    battery.add(cell);
+    const label = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.12, 0.005), matLipoLabel);
+    label.position.set(0, 0, 0.155); battery.add(label);
+    const xt2 = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.08, 0.06), matXT60);
+    xt2.position.set(-0.48, 0, 0); battery.add(xt2);
+    addPart(battery, new THREE.Vector3(0.35, -0.05, 0), new THREE.Vector3(0.35, -2.6, 0), 0.92, 0.12);
+
+    // ===== Ground (soft shadow catcher) =====
+    const ground = new THREE.Mesh(
+      new THREE.CircleGeometry(14, 48),
+      new THREE.ShadowMaterial({ opacity:0.18 })
+    );
+    ground.rotation.x = -Math.PI/2;
+    ground.position.y = -3.5;
+    ground.receiveShadow = true;
+    scene.add(ground);
+
+    // ===== ANIMATE =====
+    const tmp = new THREE.Vector3();
+    const ease = t => t<0.5 ? 2*t*t : 1 - Math.pow(-2*t+2,2)/2;
+    const clock = new THREE.Clock();
+
+    const tick = () => {
+      this._raf = requestAnimationFrame(tick);
+      const dt = clock.getDelta();
+      const p = this.progress || 0;
+
+      // gentle orbit: front-3/4 view at start, slowly orbiting
+      root.rotation.y = -0.45 + p * 1.3;
+      root.rotation.x = 0.08 + Math.sin(p*Math.PI)*0.10;
+
+      // camera: closer & framed wide; subtle dolly back as parts spread
+      const camDist = 8.2 + p*1.6;
+      camera.position.set(camDist*0.55, 2.4 + p*1.4, camDist);
+      camera.lookAt(0, 0.3 + p*0.3, 0);
+
+      // explode each part
+      this.parts.forEach(part => {
+        const { home, exploded, delay, span } = part.userData;
+        let local = (p - delay) / span;
+        local = Math.max(0, Math.min(1, local));
+        const e = ease(local);
+        tmp.copy(home).lerp(exploded, e);
+        part.position.copy(tmp);
+
+        if(part.userData.prop){
+          const spin = (1 - e) * 16 + 0.8;
+          if(part.userData.isPusher){
+            part.userData.prop.rotation.x += dt * spin;
+          } else {
+            part.userData.prop.rotation.y += dt * spin;
+          }
+        }
+      });
+
+      renderer.render(scene, camera);
+    };
+    tick();
+  }
+
+  renderVals(){
+    return {
+      canvasRef: this.canvasRef,
+      capTitleRef: this.capTitleRef,
+      capBodyRef: this.capBodyRef,
+      barRef: this.barRef,
+      pipeline: this.pipeline,
+      steps: this.steps,
+      shots: this.shots
+    };
+  }
+}
+</script>
+</body>
+</html>
